@@ -1,14 +1,25 @@
 <script lang="ts">
+    import type { CoordList } from "./utils/coords";
     import GameTile from "./GameTile.svelte";
     import { Tile } from "./classes/Tile";
+    import { getWinningCoords } from "./utils/coords";
+    import { fade } from "svelte/transition";
 
     let turn = "X";
-    // let lastCoord = 0;
+    let turnFocused = "X";
+    let lastCoord = 0;
 
     let tiles : Tile[] = [];
+
+    let winningTiles : CoordList|false = false;
     
     // Build the initial tiles list
     for(let i = 0; i<9; i++) tiles.push( new Tile(i) );
+
+    $ : {
+        winningTiles = getWinningCoords( lastCoord, tiles );
+        turnFocused = winningTiles ? tiles[winningTiles[0]].value : turn;
+    }
 
     // Handle clicking Tiles
     const setTileValue = (coord : number) : void => {
@@ -22,7 +33,7 @@
             return tile.withNewValue( turn );
         });
 
-        // lastCoord = coord;
+        lastCoord = coord;
         turn = turn === "X" ? "O" : "X";
     }
 
@@ -36,12 +47,39 @@
 </script>
 
 <div class="game-container">
+    
+    <div class="box message" >
+        {#if winningTiles}
+            <span class="col box message">Reset the game to play again</span>
+        {:else}
+            <span in:fade>Click the tiles to play the game</span>
+        {/if}
+    </div>
+    <div class="row">
+        
+        
+        <div class="col box text-center message row row-ai-center text-wrap-no" class:is-win={winningTiles} id="turn-label">
+            {#if winningTiles}
+                The winner is:
+            {:else}
+                The current player is:
+            {/if}
+        </div>
+        <div
+            aria-describedby="turn-label"
+            class="col box fs-larger row row-ai-center"
+            class:is-x={turnFocused==="X"}
+            class:is-o={turnFocused==="O"}
+            class:is-win={winningTiles}>
+            <span class="col text-center">{turnFocused}</span>
+        </div>
+    </div>
     <div class="game-box">
         <div class="game-box--inner">
             <div class="game-grid">
                 <!-- Print each tile with it's coord as the key -->
                 {#each tiles as tile (tile.coord) }
-                    <GameTile {turn} {tile} on:click={() => setTileValue(tile.coord)}/>
+                    <GameTile {turn} {tile} {winningTiles} on:click={() => setTileValue(tile.coord)}/>
                 {/each}
             </div>
         </div>
@@ -50,6 +88,46 @@
 </div>
 
 <style>
+    .game-container {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .text-center {
+        text-align: center;
+    }
+    .text-wrap-no {
+        white-space: nowrap;
+    }
+    .fs-larger {
+        font-size: 1.5em;
+    }
+    .is-x {
+        background: #1e92af;
+        color: #FFF;
+    }
+    .is-o {
+        background: #d1491c;
+        color: #FFF;
+    }
+    .box {
+        padding: 1rem;
+    }
+    .row {
+        display:flex;
+    }
+    .row-ai-center {
+        align-items: center;
+    }
+    .col {
+        flex: 1 1 0;
+    }
+    .message {
+        text-align: center;
+        background: #EFEFEF;
+    }
+    .is-win {
+        background: #149e16;
+        color: #FFF;
+    }
     .game-container {
         display: grid;
         gap: 10px;
