@@ -43,7 +43,7 @@ export const checks : GetCoordChecksLists = [
     ],
     // Checks for Coord 4
     [
-        getAdjacentRight,
+        getAdjacentLeftRight,
         getAdjacentUpDown,
         getDiagonalUpLeftDownRight,
         getDiagonalUpRightDownLeft
