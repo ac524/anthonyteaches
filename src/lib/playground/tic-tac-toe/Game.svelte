@@ -50,7 +50,7 @@
     
     <div class="box message" >
         {#if winningTiles}
-            <span class="col box message">Reset the game to play again</span>
+            <span in:fade>Reset the game to play again</span>
         {:else}
             <span in:fade>Click the tiles to play the game</span>
         {/if}
@@ -60,9 +60,9 @@
         
         <div class="col box text-center message row row-ai-center text-wrap-no" class:is-win={winningTiles} id="turn-label">
             {#if winningTiles}
-                The winner is:
+                <span in:fade>The winner is:</span>
             {:else}
-                The current player is:
+                <span>The current player is:</span>
             {/if}
         </div>
         <div
@@ -70,7 +70,8 @@
             class="col box fs-larger row row-ai-center"
             class:is-x={turnFocused==="X"}
             class:is-o={turnFocused==="O"}
-            class:is-win={winningTiles}>
+            class:is-win={winningTiles}
+            style="max-width:40px">
             <span class="col text-center">{turnFocused}</span>
         </div>
     </div>

@@ -10,6 +10,7 @@
     const makeLabel = (turn: string, tile: Tile) => tile.isPicked ? `Tile selected as ${tile.value}` : `Select tile as ${turn}`;
     let label : string = makeLabel(turn, tile);
     let isWinning = false;
+    let hoverLabel : string = "";
 
     $ : {
         if( isWinning && !tile.value) {
@@ -19,6 +20,11 @@
         }
     };
 
+    const toggleHoverLabel = () => hoverLabel = hoverLabel ? "" : turn; 
+
+    $ : {
+        if( hoverLabel && tile.value ) hoverLabel = "";
+    }
     $ : label = makeLabel(turn, tile);
 </script>
 
@@ -30,10 +36,13 @@
     class:is-winning={isWinning}
     title={label}
     disabled={winningTiles && !isWinning}
-
+    on:mouseenter={toggleHoverLabel}
+    on:mouseleave={toggleHoverLabel}
     on:click>
     {#if tile.value}
         <span in:scale><span>{tile.value}</span></span>
+    {:else if hoverLabel}
+        <span in:scale style="opacity:.7"><span>{turn}</span></span>
     {/if}
 </button>
 
