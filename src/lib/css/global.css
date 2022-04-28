@@ -8,6 +8,14 @@ button {
     background-color: #ECECEC;
     border: 1px solid #CCCCCC;
 }
-button:hover {
+button:hover,
+button:focus,
+button:focus-visible {
     background-color: #E6E6E6;
+}
+
+button:focus-visible {
+    outline: 2px solid rgb(12, 207, 12);
+    border-color: transparent !important;
+    position: relative;
 }
