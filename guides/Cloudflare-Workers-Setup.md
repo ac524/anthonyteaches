@@ -1,6 +1,6 @@
 # From Scratch Guide
 
-Have an existing Svelte Kit project you are looking to deploy to CloudFlare Workers? Follow this guide to get up and running from scratch!
+Have an existing Svelte Kit project you are looking to deploy to CloudFlare Workers? This guide outlines the steps we took to get our project first deployed to Workers via `wrangler`.
 
 ## Sign up for a CloudFlare account
 
@@ -51,9 +51,9 @@ const config = {
     ...
 
     // Set up the adapter with the import from `@sveltejs/adapter-cloudflare-workers`
-	kit: {
-		adapter: adapter()
-	}
+    kit: {
+        adapter: adapter()
+    }
 };
 ```
 
@@ -69,15 +69,21 @@ Update the `wrangler.toml` with the following configuration.
 - Replace `{MY_CLOUDFLARE_ACCOUNT_ID}` with your CloudFlare Account ID
 - Remove or Replace `{MY_CLOUDFLARE_ZONE_ID}` with a zone ID from your CloudFlare Account
 ```toml
+# other config such as `name`
+...
+
 account_id = '{MY_CLOUDFLARE_ACCOUNT_ID}'
 zone_id    = '{MY_CLOUDFLARE_ZONE_ID}' # optional, if you don't specify this a workers.dev subdomain will be used.
 
-type = "javascript" # I tried "webpack", but kept getting errors on deploy. Seemed to be failing on modern syntax in the file such as `??` and `?.`.
-workers_dev = true # Publishes to the `workers.dev` site. Need a `routes` config for zone deployment.
-compatibility_date = "2022-04-28" # Should be set to the current date the project is started.
+# I tried "webpack", but kept getting errors on deploy. Seemed to be failing on modern syntax in the file such as `??` and `?.`.
+type = "javascript"
+# Publishes to the `workers.dev` site. Need a `routes` config for zone deployment.
+workers_dev = true
+# Publishes to the `workers.dev` site. Need a `routes` config for zone deployment.
+compatibility_date = "2022-04-28"
 
 [build]
-# Assume it's already been built. You can make this "npm run build" to ensure a build before publishing. I opted to keep the "npm run build" out of this process.
+# Assume it's already been built. You can make this "npm run build" to ensure a build before publishing. We opted to keep the "npm run build" out of this process.
 command = ""
 
 [build.upload]
@@ -86,7 +92,8 @@ main = "./worker.mjs"
 
 [site]
 bucket = "./build"
-entry-point = "./dist" # Other guides had this as "./workers-sites", but the deploy seemed to be forcing a lookup for a "./dist" folder for me. Updating the option to match enabled a successful deploy.
+# Other guides had this as "./workers-sites", but the deploy seemed to be forcing a lookup for a "./dist" folder for me. Updating the option to match enabled a successful deploy.
+entry-point = "./dist"
 ```
 
 ## Build the Svelte Project and Deploy!
