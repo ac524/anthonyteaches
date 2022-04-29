@@ -47,7 +47,6 @@
 </script>
 
 <div class="game-container">
-    
     <div class="box message" >
         {#if winningTiles}
             <span in:fade>Reset the game to play again</span>
@@ -56,13 +55,11 @@
         {/if}
     </div>
     <div class="row">
-        
-        
         <div class="col box text-center message row row-ai-center text-wrap-no" class:is-win={winningTiles} id="turn-label">
             {#if winningTiles}
                 <span in:fade>The winner is:</span>
             {:else}
-                <span>The current player is:</span>
+                <span in:fade>The current player is:</span>
             {/if}
         </div>
         <div
@@ -71,7 +68,7 @@
             class:is-x={turnFocused==="X"}
             class:is-o={turnFocused==="O"}
             class:is-win={winningTiles}
-            style="max-width:40px">
+            style="max-width:40px;border-left:2px solid #FFF">
             <span class="col text-center">{turnFocused}</span>
         </div>
     </div>
