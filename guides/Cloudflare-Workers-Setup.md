@@ -60,6 +60,7 @@ const config = {
 ## Generate and Configure wrangler.toml
 
 Create a `wrangler.toml` file with the `wrangler init` command. Update `my-workers-app-name` to something that makes sense project you are deploying.
+
 ```
 wrangler init --site my-workers-app-name
 ```
