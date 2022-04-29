@@ -4,17 +4,17 @@ Have an existing Svelte Kit project you are looking to deploy to CloudFlare Work
 
 ## Sign up for a CloudFlare account
 
-Go do it! Sign up for CloadFlare!
+Go do it! Sign up for CloudFlare!
 
 ## Enable Workers Dev Site
 
 Go to the Workers tab from your main account dashboard and follow the prompts set up your `workers.dev` subdomain.
 
-## Install Wrangler CLI
+## Install Wrangler CLI Globally
 
 https://developers.cloudflare.com/workers/cli-wrangler/install-update
 
-We'll need this CLI tool to generate a config file later.
+We'll need this CLI tool to `login` to CloudFlare, `init` a workers config file and finally `publish` the app to deploy it to our workers site.
 
 ```
 npm i @cloudflare/wrangler -g
@@ -27,7 +27,7 @@ Run this command in the terminal to login to your CloudFlare accound with wrangl
 wrangler login
 ```
 
-## Install Workers Adapter
+## Install Workers Adapter to your SvelteKit project
 
 https://www.ashleyconnor.co.uk/2021/06/20/deploying-sveltekit-using-cloudflare-workers
 
