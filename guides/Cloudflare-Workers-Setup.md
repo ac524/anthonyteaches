@@ -20,6 +20,13 @@ We'll need this CLI tool to generate a config file later.
 npm i @cloudflare/wrangler -g
 ```
 
+## Login in with Wrangler CLI to authenticate publishes
+
+Run this command in the terminal to login to your CloudFlare accound with wrangler
+```
+wrangler login
+```
+
 ## Install Workers Adapter
 
 https://www.ashleyconnor.co.uk/2021/06/20/deploying-sveltekit-using-cloudflare-workers
@@ -52,7 +59,7 @@ const config = {
 
 ## Generate and Configure wrangler.toml
 
-Create a `wrangler.toml` file with the `wrangler init` command. Update `my-workers-app-name` to match the project you are deploying.
+Create a `wrangler.toml` file with the `wrangler init` command. Update `my-workers-app-name` to something that makes sense project you are deploying.
 ```
 wrangler init --site my-workers-app-name
 ```
@@ -64,12 +71,12 @@ Update the `wrangler.toml` with the following configuration.
 account_id = '{MY_CLOUDFLARE_ACCOUNT_ID}'
 zone_id    = '{MY_CLOUDFLARE_ZONE_ID}' # optional, if you don't specify this a workers.dev subdomain will be used.
 
-type = "javascript" # I tried "webpack", but kept getting errors on deploy.
+type = "javascript" # I tried "webpack", but kept getting errors on deploy. Seemed to be failing on modern syntax in the file such as `??` and `?.`.
 workers_dev = true # Publishes to the `workers.dev` site. Need a `routes` config for zone deployment.
 compatibility_date = "2022-04-28" # Should be set to the current date the project is started.
 
 [build]
-# Assume it's already been built. You can make this "npm run build" to ensure a build before publishing
+# Assume it's already been built. You can make this "npm run build" to ensure a build before publishing. I opted to keep the "npm run build" out of this process.
 command = ""
 
 [build.upload]
@@ -78,7 +85,7 @@ main = "./worker.mjs"
 
 [site]
 bucket = "./build"
-entry-point = "./dist" # Other guides had this as "./workers-sites", but the build seemed to be forcing "./dist" for me. So updated this config to match before I could get a successful deploy.
+entry-point = "./dist" # Other guides had this as "./workers-sites", but the deploy seemed to be forcing a lookup for a "./dist" folder for me. Updating the option to match enabled a successful deploy.
 ```
 
 ## Build the Svelte Project and Deploy!
