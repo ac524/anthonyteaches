@@ -5,8 +5,8 @@
 
 <script lang=ts>
     
-    import CoordBox from "$lib/playground/mouse-movement/CoordBox.svelte";
-    import { scrollY, mouseX, mouseY } from "$lib/playground/mouse-movement/stores";
+    import ProximityBox from "$lib/playground/proximity/ProximityBox.svelte";
+    import { scrollY, mouseX, mouseY } from "$lib/playground/proximity/stores";
 
     /**
      * Mouse Tracking idea
@@ -28,20 +28,20 @@
 </div>
 
 <div class="window-box">
-    <CoordBox />
+    <ProximityBox radius={100}/>
 </div>
 
 <div class="tall-box">
-    <CoordBox />
-    <CoordBox />
+    <ProximityBox radius={30} />
+    <ProximityBox radius={30} />
     <div class="box" style:transform={`translate3d(0, ${$scrollY*-1}px, 0)`}>
-        <CoordBox />
+        <ProximityBox radius={60}/>
     </div>
-    <CoordBox />
-    <CoordBox />
-    <CoordBox />
-    <CoordBox />
-    <CoordBox />
+    <ProximityBox radius={30} />
+    <ProximityBox radius={30} />
+    <ProximityBox radius={30} />
+    <ProximityBox radius={30} />
+    <ProximityBox radius={30} />
 </div>
 
 <style>
@@ -57,7 +57,7 @@
         display:flex;
         flex-direction: column;
         align-items: center;
-        gap: 1rem;
+        gap: 30px;
         height: 300vh;
         background: linear-gradient(#e66465, #9198e5);
     }

@@ -5,10 +5,6 @@
     export let radius : number = 20;
 
     let box: HTMLDivElement;
-    let offsetTop : number;
-    let offsetLeft : number;
-    let width : number;
-    let height : number;
     let inTopProx : boolean = false;
     let inBottomProx : boolean = false;
     let inLeftProx : boolean = false;
@@ -63,12 +59,8 @@
     $ : inProx = inTopProx || inBottomProx || inLeftProx || inRightProx;
 </script>
 
-<div bind:this={box} class:is-near-hover={inProx} bind:clientWidth={width} bind:clientHeight={height}>
-    <span>
-        {#if box }
-            Dimensions: {width} x {height}
-        {/if}
-    </span>
+<div bind:this={box} class:is-near-hover={inProx}>
+    <slot>{radius} Proximity Detection</slot>
 </div>
 
 <style>
