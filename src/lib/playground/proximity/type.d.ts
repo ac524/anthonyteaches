@@ -1,5 +1,6 @@
 export interface InProxDetails {
     bounds : DOMRect,
+    inBox : boolean,
     inTopProx : boolean,
     inBottomProx : boolean,
     inLeftProx : boolean,

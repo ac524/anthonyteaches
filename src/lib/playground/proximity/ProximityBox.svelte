@@ -7,6 +7,7 @@
 
     let box: HTMLDivElement;
     let bounds: DOMRect;
+    let inBox : boolean = false;
     let inTopProx : boolean = false;
     let inBottomProx : boolean = false;
     let inLeftProx : boolean = false;
@@ -24,7 +25,8 @@
         inLeftProx,
         inRightProx,
         radius,
-        ratio
+        ratio,
+        inBox
     });
 
     onMount(() => {
@@ -47,9 +49,9 @@
         if( isInWindow ) {
             bounds = box.getBoundingClientRect();
 
-            const isInBox = mouseX > bounds.left && mouseX < bounds.right && mouseY > bounds.top && mouseY < bounds.bottom;
+            inBox = mouseX > bounds.left && mouseX < bounds.right && mouseY > bounds.top && mouseY < bounds.bottom;
 
-            if( isInBox ) {
+            if( inBox ) {
                 const inTop = mouseY < (bounds.top + (bounds.height/2));
                 const inLeft = mouseX < (bounds.left + (bounds.width/2));
                 inTopProx = inTop;

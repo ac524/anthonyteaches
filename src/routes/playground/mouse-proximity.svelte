@@ -5,21 +5,30 @@
 
 <script lang=ts>
     import { tweened } from 'svelte/motion';
+    // import { get } from 'svelte/store'
     import type { InProxDetails } from "$lib/playground/proximity/type";
     import ProximityBox from "$lib/playground/proximity/ProximityBox.svelte";
     import { scrollY, mouseX, mouseY } from "$lib/playground/proximity/stores";
     import { handleMousemove } from "$lib/playground/proximity/actions";
 
-    let boxTranslateX = tweened(0);
-    let boxTranlateY = tweened(0);
+    let boxTranslateX = tweened(0, { duration: 200 });
+    let boxTranslateY = tweened(0, { duration: 200 });
+    let hasWonBoxChase = false;
     let shadowRatio = 0;
     let shadowSize = 0;
 
     const handleNoTouch = ( { detail } : { detail: InProxDetails } ) => {
+        if( detail.inBox && !hasWonBoxChase ) {
+            hasWonBoxChase = true;
+		    // boxTranslateY.set(get(boxTranslateY), {duration: 0});
+            // boxTranslateX.set(get(boxTranslateX), {duration: 0});
+        }
+        if( hasWonBoxChase ) return;
+
         if( detail.inTopProx ) {
-            $boxTranlateY += $mouseY - detail.bounds.top + detail.radius;
+            $boxTranslateY += $mouseY - detail.bounds.top + detail.radius;
         } else if( detail.inBottomProx ) {
-            $boxTranlateY -= detail.bounds.bottom - $mouseY + detail.radius;
+            $boxTranslateY -= detail.bounds.bottom - $mouseY + detail.radius;
         }
 
         if( detail.inLeftProx ) {
@@ -54,8 +63,25 @@
 </div>
 
 <div class="window-box">
-    <div style:transform={`translate3d(${$boxTranslateX}px, ${$boxTranlateY}px, 0)`}>
-        <ProximityBox radius={20} on:inprox={handleNoTouch}>Chase Me!</ProximityBox>
+    <div style="display:grid;gap:10px">
+        <button
+            class="chase-game"
+            class:has-won={hasWonBoxChase}
+            style:transform={`translate3d(${$boxTranslateX}px, ${$boxTranslateY}px, 0)`}
+        >
+            <ProximityBox radius={80} on:inprox={handleNoTouch}>
+                {#if hasWonBoxChase }
+                    You caught me!
+                {:else}
+                    Try to catch me!
+                {/if}
+            </ProximityBox>
+        </button>
+        <button on:click={() => {
+            hasWonBoxChase = false;
+            $boxTranslateX = 0;
+            $boxTranslateY = 0;
+        }}>Reset</button>
     </div>
 </div>
 <div class="window-box">
@@ -102,5 +128,18 @@
         position: fixed;
         top: 5px;
         left: 5px;
+    }
+
+    .chase-game {
+        padding: 0;
+        background: none;
+        color: #FFF
+    }
+    .chase-game.has-won {
+        background-color: green;
+    }
+    .chase-game:hover {
+        cursor: pointer;
+        background-color: green;
     }
 </style>
