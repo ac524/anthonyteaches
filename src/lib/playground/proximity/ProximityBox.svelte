@@ -16,7 +16,12 @@
     let isInWindow = false;
     let ratio : number;
 
-    const dispatch = createEventDispatcher<{ inprox: InProxDetails, outprox: undefined }>();
+    const dispatch = createEventDispatcher<{
+        inprox: InProxDetails,
+        outprox: undefined,
+        enterscreen: undefined,
+        leavescreen: undefined
+    }>();
 
     const dispatchInProx = () => dispatch("inprox", {
         bounds,
@@ -110,6 +115,10 @@
 
     $ : determineProx( $mouseX, $mouseY );
 
+    $ : {
+        dispatch(isInWindow ? "enterscreen" : "leavescreen");
+    }
+
     scrollY.subscribe(() => determineProx( $mouseX, $mouseY ));
 </script>
 
@@ -119,6 +128,7 @@
 
 <style>
     div {
+        max-width: 100%;
         width: 50vw;
         background: rgba(0,0,0,0.2);
         padding: 2rem;

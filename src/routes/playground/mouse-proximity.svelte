@@ -11,8 +11,9 @@
     import { scrollY, mouseX, mouseY } from "$lib/playground/proximity/stores";
     import { handleMousemove } from "$lib/playground/proximity/actions";
 
-    let boxTranslateX = tweened(0, { duration: 200 });
-    let boxTranslateY = tweened(0, { duration: 200 });
+    const chaseOptions = { duration: 120 }
+    let boxTranslateX = tweened(0, chaseOptions);
+    let boxTranslateY = tweened(0, chaseOptions);
     let hasWonBoxChase = false;
     let shadowRatio = 0;
     let shadowSize = 0;
@@ -20,22 +21,27 @@
     const handleNoTouch = ( { detail } : { detail: InProxDetails } ) => {
         if( detail.inBox && !hasWonBoxChase ) {
             hasWonBoxChase = true;
-		    // boxTranslateY.set(get(boxTranslateY), {duration: 0});
-            // boxTranslateX.set(get(boxTranslateX), {duration: 0});
         }
         if( hasWonBoxChase ) return;
 
         if( detail.inTopProx ) {
-            $boxTranslateY += $mouseY - detail.bounds.top + detail.radius;
+            $boxTranslateY += $mouseY - detail.bounds.top + detail.radius + 30;
         } else if( detail.inBottomProx ) {
-            $boxTranslateY -= detail.bounds.bottom - $mouseY + detail.radius;
+            $boxTranslateY -= detail.bounds.bottom - $mouseY + detail.radius + 30;
         }
 
         if( detail.inLeftProx ) {
-            $boxTranslateX += $mouseX - detail.bounds.left + detail.radius;
+            $boxTranslateX += $mouseX - detail.bounds.left + detail.radius + 30;
         } else if( detail.inRightProx ) {
-            $boxTranslateX -= detail.bounds.right - $mouseX + detail.radius;
+            $boxTranslateX -= detail.bounds.right - $mouseX + detail.radius + 30;
         }
+    }
+
+    const resetChaseGame = async () => {
+        await Promise.all([boxTranslateX.set(0, { duration: 0 }),boxTranslateY.set(0, { duration: 0 })]);
+        boxTranslateX.set(0, chaseOptions);
+        boxTranslateY.set(0, chaseOptions);
+        hasWonBoxChase = false;
     }
 
     const handleProximityShadow = ({ detail } : { detail: InProxDetails }) => {
@@ -59,29 +65,29 @@
 </div>
 
 <div class="window-box">
-    <ProximityBox radius={100}>Mouse detected within 100px</ProximityBox>
+    <ProximityBox radius={120}>Mouse detected within 100px</ProximityBox>
 </div>
 
 <div class="window-box">
-    <div style="display:grid;gap:10px">
+    <div style="display:grid;gap:10px;">
         <button
             class="chase-game"
             class:has-won={hasWonBoxChase}
+            style="width:200px"
             style:transform={`translate3d(${$boxTranslateX}px, ${$boxTranslateY}px, 0)`}
+            on:click={resetChaseGame}
         >
-            <ProximityBox radius={80} on:inprox={handleNoTouch}>
+            <ProximityBox radius={120} on:inprox={handleNoTouch} on:leavescreen={() => !hasWonBoxChase && resetChaseGame()}>
                 {#if hasWonBoxChase }
-                    You caught me!
+                    You caught me! Click to reset.
                 {:else}
                     Try to catch me!
                 {/if}
             </ProximityBox>
         </button>
-        <button on:click={() => {
-            hasWonBoxChase = false;
-            $boxTranslateX = 0;
-            $boxTranslateY = 0;
-        }}>Reset</button>
+        {#if hasWonBoxChase }
+        <button on:click={resetChaseGame} class="has-won">Win!</button>
+        {/if}
     </div>
 </div>
 <div class="window-box">
@@ -135,11 +141,14 @@
         background: none;
         color: #FFF
     }
-    .chase-game.has-won {
+    .has-won {
         background-color: green;
+        color: #FFF
     }
     .chase-game:hover {
-        cursor: pointer;
         background-color: green;
+    }
+    button:hover {
+        cursor: pointer;
     }
 </style>
