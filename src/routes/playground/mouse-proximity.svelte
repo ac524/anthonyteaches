@@ -87,14 +87,14 @@
         justify-content: center;
         align-items: center;
     }
-    .tall-box {
+    /* .tall-box {
         display:flex;
         flex-direction: column;
         align-items: center;
         gap: 30px;
         height: 300vh;
         background: linear-gradient(#e66465, #9198e5);
-    }
+    } */
     .coords-box {
         background-color: rgba(0,0,0,0.7);
         padding: 1rem;
