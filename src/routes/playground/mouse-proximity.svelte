@@ -1,6 +1,6 @@
 <svelte:head>
-    <title>Svelte Playground: Detecting Proximity with element's Bounding Box</title>
-    <meta name="description" content="A page to experiment detecting when a mouse is within the proximity of an element's bounding box">
+    <title>Svelte Playground: Mouse Proximity to Element Bounding Rectangle</title>
+    <meta name="description" content="A page to experiment with detecting when a mouse is within the proximity of an element's bounding rectangle">
 </svelte:head>
 
 <script lang=ts>
@@ -12,6 +12,7 @@
 
     let boxTranslateX = tweened(0);
     let boxTranlateY = tweened(0);
+    let shadowRatio = 0;
     let shadowSize = 0;
 
     const handleNoTouch = ( { detail } : { detail: InProxDetails } ) => {
@@ -29,7 +30,7 @@
     }
 
     const handleProximityShadow = ({ detail } : { detail: InProxDetails }) => {
-        console.log("shadow");
+        shadowRatio = detail.ratio;
         shadowSize = Math.floor(30 * detail.ratio);
     }
     const handleRemoveProximityShadow = () => {
@@ -49,35 +50,35 @@
 </div>
 
 <div class="window-box">
-    <ProximityBox radius={100}/>
+    <ProximityBox radius={100}>Mouse detected within 100px</ProximityBox>
 </div>
 
 <div class="window-box">
     <div style:transform={`translate3d(${$boxTranslateX}px, ${$boxTranlateY}px, 0)`}>
-        <ProximityBox radius={20} on:inprox={handleNoTouch}/>
+        <ProximityBox radius={20} on:inprox={handleNoTouch}>Chase Me!</ProximityBox>
     </div>
 </div>
-
 <div class="window-box">
-    <div style={`box-shadow: 0 0 ${shadowSize}px ${shadowSize*.8}px rgba(0,0,0,0.35);`}>
-        <ProximityBox radius={200} on:inprox={handleProximityShadow} on:outprox={handleRemoveProximityShadow} />
+    <div style={`transform: scale(${1+(.2*shadowRatio)}); box-shadow: 0 0 ${shadowSize}px ${shadowSize*.8}px rgba(0,0,0,0.35);`}>
+        <ProximityBox radius={200} on:inprox={handleProximityShadow} on:outprox={handleRemoveProximityShadow}>
+            Highlight CTA
+        </ProximityBox>
     </div>
 </div>
 
-<div class="tall-box">
-    <ProximityBox radius={30} />
-    <ProximityBox radius={30} />
+<div class="center-box">
     <div class="box" style:transform={`translate3d(0, ${$scrollY*-1}px, 0)`}>
-        <ProximityBox radius={60}/>
+        <ProximityBox radius={60}>A box translating on scroll</ProximityBox>
     </div>
-    <ProximityBox radius={30} />
-    <ProximityBox radius={30} />
-    <ProximityBox radius={30} />
-    <ProximityBox radius={30} />
-    <ProximityBox radius={30} />
 </div>
 
 <style>
+    .center-box
+    {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
     .window-box {
         background: linear-gradient(#e66465, #9198e5);
         height: 100vh;
