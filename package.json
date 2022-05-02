@@ -33,6 +33,8 @@
   },
   "type": "module",
   "dependencies": {
-    "@sveltejs/adapter-cloudflare-workers": "^1.0.0-next.39"
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@sveltejs/adapter-cloudflare-workers": "^1.0.0-next.39",
+    "svelte-awesome": "^2.4.6"
   }
 }
