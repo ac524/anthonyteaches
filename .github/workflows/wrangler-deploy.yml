@@ -1,16 +1,16 @@
 name: Deploy To Worker
 
-# on:
-#   push:
-#     branches:
-#       - main
+on:
+  push:
+    branches:
+      - main
 
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
-#     name: Deploy
-#     steps:
-#       - uses: actions/checkout@v2
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - uses: actions/checkout@v2
 #       - name: Use Node.js 16.x
 #         uses: actions/setup-node@v1
 #         with:
