@@ -126,9 +126,9 @@
         align-items: center;
         text-align: center;
     }
-    div.grow {
+    /* div.grow {
         flex-grow: 1;
-    }
+    } */
     div.is-near-hover {
         background: rgba(255,255,255,0.2);
     }
