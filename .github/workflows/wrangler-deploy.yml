@@ -5,25 +5,25 @@ name: Deploy To Worker
 #     branches:
 #       - main
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    name: Deploy
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v1
-        with:
-            node-version: 16.x
-      # Create cache for node module
-      - name: NPM dependencies cache
-        uses: c-hive/gha-npm-cache@v1
-      # Build the app
-      - name: 🧰 install deps
-        run: npm i
-      - name: Build site
-        run: 'npm run build'
-      - name: Publish
-        uses: cloudflare/wrangler-action@1.3.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+#     name: Deploy
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Use Node.js 16.x
+#         uses: actions/setup-node@v1
+#         with:
+#             node-version: 16.x
+#       # Create cache for node module
+#       - name: NPM dependencies cache
+#         uses: c-hive/gha-npm-cache@v1
+#       # Build the app
+#       - name: 🧰 install deps
+#         run: npm i
+#       - name: Build site
+#         run: 'npm run build'
+#       - name: Publish
+#         uses: cloudflare/wrangler-action@1.3.0
+#         with:
+#           apiToken: ${{ secrets.CF_API_TOKEN }}
