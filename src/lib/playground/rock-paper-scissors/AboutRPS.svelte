@@ -12,11 +12,15 @@
 	let showModal = false;
 </script>
 
-<button on:click={() => (showModal = true)}> What is rock-paper-scissors? </button>
+<button on:click={() => (showModal = true)}>
+	How to play, if you've been living under a rock</button
+>
 
 {#if showModal}
 	<Modal on:close={() => (showModal = false)}>
-		<h2 slot="header">Choose rock, paper, or scissors. <br> Your opponent also chooses from the same 3 options.</h2>
+		<h2 slot="header">
+			Choose rock, paper, or scissors. <br /> Your opponent also chooses from the same 3 options.
+		</h2>
 		<div class="icons">
 			<!-- <Icon data={handPaperO} scale={5} />
 			<Icon data={handScissorsO} />
