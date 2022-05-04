@@ -8,8 +8,7 @@
     // import { get } from 'svelte/store'
     import type { InProxDetails } from "$lib/playground/proximity/type";
     import ProximityBox from "$lib/playground/proximity/ProximityBox.svelte";
-    import { scrollY, mouseX, mouseY } from "$lib/playground/proximity/stores";
-    import { handleMousemove } from "$lib/playground/proximity/actions";
+    import { scrollY, mouseCoords } from "$lib/playground/proximity/stores";
 
     const chaseOptions = { duration: 120 }
     let boxTranslateX = tweened(0, chaseOptions);
@@ -25,15 +24,15 @@
         if( hasWonBoxChase ) return;
 
         if( detail.inTopProx ) {
-            $boxTranslateY += $mouseY - detail.bounds.top + detail.radius + 30;
+            $boxTranslateY += $mouseCoords.y - detail.bounds.top + detail.radius + 30;
         } else if( detail.inBottomProx ) {
-            $boxTranslateY -= detail.bounds.bottom - $mouseY + detail.radius + 30;
+            $boxTranslateY -= detail.bounds.bottom - $mouseCoords.y + detail.radius + 30;
         }
 
         if( detail.inLeftProx ) {
-            $boxTranslateX += $mouseX - detail.bounds.left + detail.radius + 30;
+            $boxTranslateX += $mouseCoords.x - detail.bounds.left + detail.radius + 30;
         } else if( detail.inRightProx ) {
-            $boxTranslateX -= detail.bounds.right - $mouseX + detail.radius + 30;
+            $boxTranslateX -= detail.bounds.right - $mouseCoords.x + detail.radius + 30;
         }
     }
 
@@ -58,10 +57,10 @@
     **/
 </script>
 
-<svelte:window on:mousemove={handleMousemove} bind:scrollY={$scrollY}></svelte:window>
+<svelte:window bind:scrollY={$scrollY}></svelte:window>
 
 <div class="coords-box">
-    The mouse position is {$mouseX} x ({$mouseY} + {$scrollY} = {$mouseY + $scrollY})
+    The mouse position is {$mouseCoords.x} x ({$mouseCoords.y} + {$scrollY} = {$mouseCoords.y + $scrollY})
 </div>
 
 <div class="window-box">

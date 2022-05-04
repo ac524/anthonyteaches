@@ -1,7 +1,8 @@
 <script lang=ts>
     import type { InProxDetails } from "./type";
-    import { onMount, createEventDispatcher } from "svelte";
-    import { mouseX, mouseY, scrollY } from "./stores";
+    import type { Unsubscriber } from "svelte/store";
+    import { onMount, createEventDispatcher, onDestroy } from "svelte";
+    import { scrollY, mouseCoords } from "./stores";
 
     export let radius : number = 20;
 
@@ -34,22 +35,7 @@
         inBox
     });
 
-    onMount(() => {
-        let options = {
-            rootMargin: '20px',
-        };
-
-        // TODO Create/Share a single observer as a dependency?
-        let observer = new IntersectionObserver((entries) => {
-
-            entries.forEach(entry => isInWindow = entry.isIntersecting);
-
-        }, options);
-
-        observer.observe( box );
-    });
-
-    const determineProx = ( mouseX: number, mouseY: number ) => {
+    const determineProx = ( { x: mouseX, y: mouseY } : { x : number, y: number } ) => {
         const wasInProx = inProx;
         if( isInWindow ) {
             bounds = box.getBoundingClientRect();
@@ -113,13 +99,35 @@
         }
     }
 
-    $ : determineProx( $mouseX, $mouseY );
+    $ : determineProx( $mouseCoords);
 
     $ : {
         dispatch(isInWindow ? "enterscreen" : "leavescreen");
     }
 
-    scrollY.subscribe(() => determineProx( $mouseX, $mouseY ));
+
+    let scrollYSub : Unsubscriber;
+    onMount(() => {
+        let options = {
+            rootMargin: '20px',
+        };
+
+        // TODO Create/Share a single observer as a dependency?
+        let observer = new IntersectionObserver((entries) => {
+
+            entries.forEach(entry => isInWindow = entry.isIntersecting);
+
+        }, options);
+
+        observer.observe( box );
+
+        scrollYSub = scrollY.subscribe(() => determineProx( $mouseCoords ));
+    });
+
+    onDestroy(() => {
+        scrollYSub && scrollYSub();
+    });
+    
 </script>
 
 <div bind:this={box} class:is-near-hover={inProx}>
