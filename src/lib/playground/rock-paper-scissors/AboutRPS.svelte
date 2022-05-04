@@ -30,13 +30,13 @@
 			<h3>How do I win?</h3>
 
 			<li>paper covers rock</li>
-			<Icon data={faHand} scale="4" style="color: green" />
+			<Icon data={faHand} scale="4" style="color: teal" />
 			<Icon data={faHandBackFist} scale="3" />
 			<li>scissors cut paper</li>
-			<Icon data={faHandScissors} scale="4" style="color: green" flip="horizontal" />
+			<Icon data={faHandScissors} scale="4" style="color: teal" flip="horizontal" />
 			<Icon data={faHand} scale="3" />
 			<li>rock crushes the scissors</li>
-			<Icon data={faHandBackFist} scale="4" style="color: green" />
+			<Icon data={faHandBackFist} scale="4" style="color: teal" />
 			<Icon data={faHandScissors} scale="3" />
 			<br />
 			<li><em>same choice = tie</em></li>

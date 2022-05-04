@@ -16,25 +16,22 @@
 
 	// Build the initial icons
 
-	let result: string = 'none';
+	let result: string = '';
 	let choice: string = '';
 	let computerChoice: string = '';
+
 	// Handle user2 or computer returning their move
 
 	const options = ['rock', 'paper', 'scissors'];
 	// Handle user1 clicking icon
-	const winner = (value) => {
+	const winner = (value: string) => {
 		choice = 'You chose ' + value;
 		let random = options[Math.floor(Math.random() * options.length)];
 		computerChoice = 'Computer chose ' + random;
-		return (result = selectWinner(value, random));
+		result = selectWinner(value, random);
 	};
 
-	// button to reset the game. tally win?
-	const resetGame = (): void => {
-		return;
-		// return something here to reset the game.
-	};
+	// Add button for high scores?
 </script>
 
 <main class="game-container">
@@ -48,31 +45,34 @@
 	<div class="row">
 		<div class="col box text-center message row row-ai-center text-wrap-no" id="turn-label">
 			{#if result}
-				<span class="buttons" in:fade>The winner is:</span>
-				{#if result === 'user1'}
-					<div
-						aria-describedby="turn-label"
-						class="col box buttons fs-larger row row-ai-center"
-						class:is-win={result}
-						style="max-width:40px;border-left:2px solid #FFF"
-						in:fade
-					>
-						Me!
-						<Icon data={faTrophy} />
-					</div>
-				{:else if result === 'tie'}
-					<span class="buttons" in:fade
-						>It's a tie
-						<Icon
-							data={faEquals}
-							scale="3"
-							spin
-							style="animation-duration: 1.5s; animation-iteration-count: 1"
-						/>
-					</span>
-				{:else}
-					<span in:fade>Computer<Icon data={faMicrochip} scale="2" /></span>
-				{/if}
+				<span class="buttons row" in:fade
+					>The winner is:
+					{#if result === 'user1'}
+						<span
+							aria-describedby="turn-label"
+							class="col box buttons row row-ai-center"
+							class:is-win={result}
+							style="max-width:40px;padding:10px;border-left:2px solid #FFF"
+							in:fade
+						>
+							Me!
+						</span>
+						<Icon data={faTrophy} scale="2" />
+					{:else if result === 'tie'}
+						<span class="buttons" in:fade
+							>It's a tie
+							<Icon
+								class="text-center"
+								data={faEquals}
+								scale="1"
+								spin
+								style="animation-duration: 1.5s; animation-iteration-count: 1"
+							/>
+						</span>
+					{:else}
+						<span in:fade>Computer<Icon data={faMicrochip} scale="1" /></span>
+					{/if}
+				</span>
 			{/if}
 		</div>
 	</div>
@@ -81,13 +81,15 @@
 	<div class="fs-larger text-center ">
 		Choose rock, paper, or scissors.
 		<div class="row buttons">
-			<button value="rock" on:click={(e) => winner(options[0])}
+			<button class="active" value="rock" on:click={(e) => winner(options[0])}
 				><Icon data={faHandBackFist} scale="3" />
 			</button>
-			<button value="paper" on:click={(e) => winner(options[1])}
+
+			<button class="active" value="paper" on:click={(e) => winner(options[1])}
 				><Icon data={faHand} scale="3" />
 			</button>
-			<button value="scissors" on:click={(e) => winner(options[2])}>
+
+			<button class="active" value="scissors" on:click={(e) => winner(options[2])}>
 				<Icon data={faHandScissors} scale="3" />
 			</button>
 		</div>
@@ -100,10 +102,13 @@
 	{#if computerChoice === 'rock' || 'paper' || 'scissors'}
 		<span class="col text-center computerChoices ">{computerChoice}</span>
 	{/if}
-	<button on:click={resetGame} title="Reset the game board">Reset</button>
 </main>
 
 <style>
+	.active:hover {
+		background-color: white;
+		color: teal;
+	}
 	.buttons {
 		align-items: center;
 		justify-content: center;
@@ -137,7 +142,7 @@
 		background: #efefef;
 	}
 	.is-win {
-		background: #149e16;
+		background: teal;
 		color: #fff;
 	}
 	.game-container {
