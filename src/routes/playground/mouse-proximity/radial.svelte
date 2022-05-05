@@ -1,3 +1,7 @@
+<svelte:head>
+    <title>Svelte Playground: Radial Mouse Proximity Detection</title>
+    <meta name="description" content="An example of radial mouse proximity detection by Anthony Brown">
+</svelte:head>
 <script lang=ts>
     import { browser } from "$app/env";
 

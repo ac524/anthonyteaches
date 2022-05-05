@@ -1,6 +1,6 @@
 <svelte:head>
-    <title>Svelte Playground: Mouse Proximity to Element Bounding Rectangle</title>
-    <meta name="description" content="A page to experiment with detecting when a mouse is within the proximity of an element's bounding rectangle">
+    <title>Svelte Playground: Mouse Proximity with Intersection Observer API</title>
+    <meta name="description" content="A page to experiment with detecting when a mouse is within the proximity of an element using the Intersection Observer API">
 </svelte:head>
 
 <script lang=ts>
