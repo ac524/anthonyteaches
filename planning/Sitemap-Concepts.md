@@ -21,8 +21,7 @@ Provide context for what I teach my students during a bootcamp. This should incl
 ### Objectives
 
 Provide the user a way to quickly navigate to / explore relevant material.
-
-## Education Categories?
+### Education Content Outline
 
 **How to Collaborate**
 - How to be an effective team member
