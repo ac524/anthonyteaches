@@ -64,7 +64,7 @@
             tracker.style.top = "0";
             tracker.style.left = "0";
             // tracker.style.background = "red";
-            // tracker.style.zIndex = "-1";
+            tracker.style.zIndex = "-1";
             tracker.style.height = `${bounds.height+(radius)}px`;
             tracker.style.width = `${bounds.width+(radius)}px`;
 

@@ -18,14 +18,14 @@ export const mouseCoords = readable({x:0,y:0}, (set) => {
         set({x,y});
     };
     
-    document.body.addEventListener("mousemove", recordMove);
-    document.body.addEventListener("touchstart", recordTouchMove);
-    document.body.addEventListener("touchmove", recordTouchMove);
+    document.addEventListener("mousemove", recordMove);
+    document.addEventListener("touchstart", recordTouchMove);
+    document.addEventListener("touchmove", recordTouchMove);
 
     return () => {
-        document.body.removeEventListener("mousemove", recordMove);
-        document.body.removeEventListener("touchstart", recordTouchMove);
-        document.body.removeEventListener("touchmove", recordTouchMove);
+        document.removeEventListener("mousemove", recordMove);
+        document.removeEventListener("touchstart", recordTouchMove);
+        document.removeEventListener("touchmove", recordTouchMove);
     }
 });
 
