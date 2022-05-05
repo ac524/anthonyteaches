@@ -24,7 +24,19 @@ Provide the user a way to quickly navigate to / explore relevant material.
 
 ## Education Categories?
 
-**Environment Basics**
+**How to Collaborate**
+- How to be an effective team member
+- Git workflows
+- What are soft skills?
+- When do a I make a pull request?
+- Making a reviewer friendly pull request
+- What is a draft pull request?
+
+**Git basics**
+- Writing an effective commit message
+- When should I commit? push?
+
+**Development Environment**
 - Generating SSH Keys
 - Working with your file system (Will need split content for Window/Mac)
     - Computer File/Folder Basics
