@@ -1,8 +1,9 @@
 <script>
+    import Navbar from "$lib/components/Navbar.svelte";
     import "$lib/css/global.css";
 </script>
 
-<slot name="breadcrumb"></slot>
+<Navbar />
 
 <div class="container">
     <slot></slot>
