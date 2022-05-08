@@ -19,6 +19,12 @@ Playgrounds and expirimentations built by contributors while learning Svelte.
     <li><a href="/playground/mouse-proximity/intersection-observer">Detection By Intersection Observer API</a></li>
 </ul>
 
+
+<h2>Scroll Effects</h2>
+<ul>
+    <li><a href="/playground/scroll/perspective">Perspective effects</a></li>
+</ul>
+
 <style>
 
 </style>
