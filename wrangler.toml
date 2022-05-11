@@ -5,7 +5,7 @@ zone_id = ''
 usage_model = ''
 compatibility_flags = []
 workers_dev = true
-site = {bucket = "",entry-point = "workers-site"}
+site = {bucket = "./build", entry-point = "workers-site"}
 compatibility_date = "2022-05-04"
 
 account_id = '74829c5b0d7ab48291e8419849c18b8a'
@@ -26,7 +26,7 @@ command = ""
 format = "modules"
 main = "./worker.mjs"
 
-[site]
-bucket = "./build"
+# [site]
+# bucket = "./build"
 # Other guides had this as "./workers-sites", but the deploy seemed to be forcing a lookup for a "./dist" folder for me. Updating the option to match enabled a successful deploy.
 entry-point = "./dist"

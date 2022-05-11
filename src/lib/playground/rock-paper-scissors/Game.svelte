@@ -91,23 +91,11 @@
 </main>
 
 <style>
-	.image {
-		max-height: 40px;
-		width: auto;
-		align-items: center;
-		justify-content: center;
-		text-align: center;
-		padding: 1rem;
-		color: black;
-		z-index: 100;
-	}
 
-	.image:hover {
-	}
 	.active:hover {
 		background-color: lightblue !important;
-		filter: saturate(75%);
 		cursor: pointer;
+		background-image:120%;
 	}
 	.buttons {
 		align-items: center;
@@ -178,5 +166,16 @@
 	}
 	button:hover {
 		cursor: pointer;
+	}
+
+	
+	.image {
+		max-height: 40px;
+		width: auto;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		padding: 1rem;
+		
 	}
 </style>
