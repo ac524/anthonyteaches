@@ -48,6 +48,11 @@
 {/if}
 
 <style>
+	button:hover {
+		cursor: pointer;
+		background-color: teal;
+		color: white;
+	}
 	.definition-list {
 		text-decoration: none;
 		list-style: none;
@@ -56,15 +61,15 @@
 		padding-left: 2rem;
 	}
 	.image {
-		height: 40px;
+		height: 100px !important;
 		width: auto;
 		padding: 1rem;
 	}
 
 	.image-win {
-		height: 45px;
+		height: 100px !important;
 		width: auto;
-		filter: invert(40%) sepia(30%) saturate(600%) hue-rotate(90deg) brightness(90%) contrast(90%);
+		filter: invert(90%) sepia(50%) saturate(600%) hue-rotate(90deg) brightness(90%) contrast(90%);
 		padding: 1rem;
 	}
 </style>

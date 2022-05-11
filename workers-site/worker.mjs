@@ -24,7 +24,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target, mod));
 
-// .svelte-kit/output/server/chunks/index-7f83503c.js
+// .svelte-kit/output/server/chunks/index-251281f1.js
 function noop() {
 }
 function assign(tar, src) {
@@ -50,6 +50,9 @@ function subscribe(store, ...callbacks) {
   }
   const unsub = store.subscribe(...callbacks);
   return unsub.unsubscribe ? () => unsub.unsubscribe() : unsub;
+}
+function null_to_empty(value) {
+  return value == null ? "" : value;
 }
 function run_tasks(now2) {
   tasks.forEach((task) => {
@@ -87,6 +90,9 @@ function get_current_component() {
     throw new Error("Function called outside component initialization");
   return current_component;
 }
+function onDestroy(fn) {
+  get_current_component().$$.on_destroy.push(fn);
+}
 function createEventDispatcher() {
   const component = get_current_component();
   return (type, detail) => {
@@ -101,6 +107,26 @@ function createEventDispatcher() {
 }
 function setContext(key2, context) {
   get_current_component().$$.context.set(key2, context);
+}
+function merge_ssr_styles(style_attribute, style_directive) {
+  const style_object = {};
+  for (const individual_style of style_attribute.split(";")) {
+    const colon_index = individual_style.indexOf(":");
+    const name = individual_style.slice(0, colon_index).trim();
+    const value = individual_style.slice(colon_index + 1).trim();
+    if (!name)
+      continue;
+    style_object[name] = value;
+  }
+  for (const name in style_directive) {
+    const value = style_directive[name];
+    if (value) {
+      style_object[name] = value;
+    } else {
+      delete style_object[name];
+    }
+  }
+  return style_object;
 }
 function escape(html) {
   return String(html).replace(/["'&<>]/g, (match) => escaped[match]);
@@ -148,7 +174,7 @@ function create_ssr_component(fn) {
       return {
         html,
         css: {
-          code: Array.from(result.css).map((css13) => css13.code).join("\n"),
+          code: Array.from(result.css).map((css23) => css23.code).join("\n"),
           map: null
         },
         head: result.title + result.head
@@ -171,8 +197,8 @@ function add_styles(style_object) {
   return styles ? ` style="${styles}"` : "";
 }
 var identity, is_client, now, raf, tasks, current_component, escaped, missing_component, on_destroy;
-var init_index_7f83503c = __esm({
-  ".svelte-kit/output/server/chunks/index-7f83503c.js"() {
+var init_index_251281f1 = __esm({
+  ".svelte-kit/output/server/chunks/index-251281f1.js"() {
     identity = (x) => x;
     is_client = typeof window !== "undefined";
     now = is_client ? () => window.performance.now() : () => Date.now();
@@ -204,12 +230,20 @@ var layout_svelte_exports = {};
 __export(layout_svelte_exports, {
   default: () => _layout
 });
-var _layout;
+var css, _layout;
 var init_layout_svelte = __esm({
   ".svelte-kit/output/server/entries/pages/__layout.svelte.js"() {
-    init_index_7f83503c();
+    init_index_251281f1();
+    css = {
+      code: ".container.svelte-14ftywy{padding:1rem;max-width:1040px}",
+      map: null
+    };
     _layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      return `${slots.default ? slots.default({}) : ``}`;
+      $$result.css.add(css);
+      return `${slots.breadcrumb ? slots.breadcrumb({}) : ``}
+
+<div class="${"container svelte-14ftywy"}">${slots.default ? slots.default({}) : ``}
+</div>`;
     });
   }
 });
@@ -217,18 +251,18 @@ var init_layout_svelte = __esm({
 // .svelte-kit/output/server/nodes/0.js
 var __exports = {};
 __export(__exports, {
-  css: () => css,
+  css: () => css2,
   entry: () => entry,
   js: () => js,
   module: () => layout_svelte_exports
 });
-var entry, js, css;
+var entry, js, css2;
 var init__ = __esm({
   ".svelte-kit/output/server/nodes/0.js"() {
     init_layout_svelte();
-    entry = "pages/__layout.svelte-3b3675dc.js";
-    js = ["pages/__layout.svelte-3b3675dc.js", "chunks/index-826e8f7e.js"];
-    css = ["assets/pages/__layout.svelte-4ec97de3.css"];
+    entry = "pages/__layout.svelte-bf2bc165.js";
+    js = ["pages/__layout.svelte-bf2bc165.js", "chunks/index-4ac803cb.js"];
+    css2 = ["assets/pages/__layout.svelte-fc806219.css", "assets/global-68ba7890.css"];
   }
 });
 
@@ -244,7 +278,7 @@ function load({ error: error2, status }) {
 var Error2;
 var init_error_svelte = __esm({
   ".svelte-kit/output/server/entries/fallbacks/error.svelte.js"() {
-    init_index_7f83503c();
+    init_index_251281f1();
     Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { status } = $$props;
       let { error: error2 } = $$props;
@@ -267,18 +301,18 @@ ${error2.stack ? `<pre>${escape(error2.stack)}</pre>` : ``}`;
 // .svelte-kit/output/server/nodes/1.js
 var __exports2 = {};
 __export(__exports2, {
-  css: () => css2,
+  css: () => css3,
   entry: () => entry2,
   js: () => js2,
   module: () => error_svelte_exports
 });
-var entry2, js2, css2;
+var entry2, js2, css3;
 var init__2 = __esm({
   ".svelte-kit/output/server/nodes/1.js"() {
     init_error_svelte();
-    entry2 = "error.svelte-34ab46d5.js";
-    js2 = ["error.svelte-34ab46d5.js", "chunks/index-826e8f7e.js"];
-    css2 = [];
+    entry2 = "error.svelte-28e98efb.js";
+    js2 = ["error.svelte-28e98efb.js", "chunks/index-4ac803cb.js"];
+    css3 = [];
   }
 });
 
@@ -290,29 +324,34 @@ __export(index_svelte_exports, {
 var Routes;
 var init_index_svelte = __esm({
   ".svelte-kit/output/server/entries/pages/index.svelte.js"() {
-    init_index_7f83503c();
+    init_index_251281f1();
     Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      return `<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="${"https://kit.svelte.dev"}">kit.svelte.dev</a> to read the documentation</p>`;
+      return `${$$result.head += `${$$result.title = `<title>Anthony Teaches! Coding Bootcamp Students | Code Resouces</title>`, ""}<meta name="${"description"}" content="${"Learn about Anthony Brown and the students he teaches and explore free code resources to help you through your own bootcamp experience."}" data-svelte="svelte-ahxxg6">`, ""}
+
+<h1>Anthony Teaches!</h1>
+
+<p>Much more to come here in the future! For now you can check out some playgrounds we have as we are learning our current environment.</p>
+
+<p><a href="${"/playground"}">View Playgrounds</a></p>`;
     });
   }
 });
 
-// .svelte-kit/output/server/nodes/2.js
+// .svelte-kit/output/server/nodes/4.js
 var __exports3 = {};
 __export(__exports3, {
-  css: () => css3,
+  css: () => css4,
   entry: () => entry3,
   js: () => js3,
   module: () => index_svelte_exports
 });
-var entry3, js3, css3;
+var entry3, js3, css4;
 var init__3 = __esm({
-  ".svelte-kit/output/server/nodes/2.js"() {
+  ".svelte-kit/output/server/nodes/4.js"() {
     init_index_svelte();
-    entry3 = "pages/index.svelte-79482e59.js";
-    js3 = ["pages/index.svelte-79482e59.js", "chunks/index-826e8f7e.js"];
-    css3 = [];
+    entry3 = "pages/index.svelte-eae11391.js";
+    js3 = ["pages/index.svelte-eae11391.js", "chunks/index-4ac803cb.js"];
+    css4 = [];
   }
 });
 
@@ -324,28 +363,143 @@ __export(login_svelte_exports, {
 var Login;
 var init_login_svelte = __esm({
   ".svelte-kit/output/server/entries/pages/login.svelte.js"() {
-    init_index_7f83503c();
+    init_index_251281f1();
     Login = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       return ``;
     });
   }
 });
 
-// .svelte-kit/output/server/nodes/3.js
+// .svelte-kit/output/server/nodes/5.js
 var __exports4 = {};
 __export(__exports4, {
-  css: () => css4,
+  css: () => css5,
   entry: () => entry4,
   js: () => js4,
   module: () => login_svelte_exports
 });
-var entry4, js4, css4;
+var entry4, js4, css5;
 var init__4 = __esm({
-  ".svelte-kit/output/server/nodes/3.js"() {
+  ".svelte-kit/output/server/nodes/5.js"() {
     init_login_svelte();
-    entry4 = "pages/login.svelte-79e0627c.js";
-    js4 = ["pages/login.svelte-79e0627c.js", "chunks/index-826e8f7e.js"];
-    css4 = [];
+    entry4 = "pages/login.svelte-f36107d2.js";
+    js4 = ["pages/login.svelte-f36107d2.js", "chunks/index-4ac803cb.js"];
+    css5 = [];
+  }
+});
+
+// .svelte-kit/output/server/entries/pages/__layout-blank.svelte.js
+var layout_blank_svelte_exports = {};
+__export(layout_blank_svelte_exports, {
+  default: () => _layout_blank
+});
+var _layout_blank;
+var init_layout_blank_svelte = __esm({
+  ".svelte-kit/output/server/entries/pages/__layout-blank.svelte.js"() {
+    init_index_251281f1();
+    _layout_blank = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      return `${slots.default ? slots.default({}) : ``}`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/nodes/2.js
+var __exports5 = {};
+__export(__exports5, {
+  css: () => css6,
+  entry: () => entry5,
+  js: () => js5,
+  module: () => layout_blank_svelte_exports
+});
+var entry5, js5, css6;
+var init__5 = __esm({
+  ".svelte-kit/output/server/nodes/2.js"() {
+    init_layout_blank_svelte();
+    entry5 = "pages/__layout-blank.svelte-68af0143.js";
+    js5 = ["pages/__layout-blank.svelte-68af0143.js", "chunks/index-4ac803cb.js"];
+    css6 = ["assets/global-68ba7890.css"];
+  }
+});
+
+// .svelte-kit/output/server/entries/pages/playground/__layout@blank.svelte.js
+var layout_blank_svelte_exports2 = {};
+__export(layout_blank_svelte_exports2, {
+  default: () => _layout_blank2
+});
+var _layout_blank2;
+var init_layout_blank_svelte2 = __esm({
+  ".svelte-kit/output/server/entries/pages/playground/__layout@blank.svelte.js"() {
+    init_index_251281f1();
+    _layout_blank2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      return `${slots.default ? slots.default({}) : ``}`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/nodes/3.js
+var __exports6 = {};
+__export(__exports6, {
+  css: () => css7,
+  entry: () => entry6,
+  js: () => js6,
+  module: () => layout_blank_svelte_exports2
+});
+var entry6, js6, css7;
+var init__6 = __esm({
+  ".svelte-kit/output/server/nodes/3.js"() {
+    init_layout_blank_svelte2();
+    entry6 = "pages/playground/__layout@blank.svelte-f4b64296.js";
+    js6 = ["pages/playground/__layout@blank.svelte-f4b64296.js", "chunks/index-4ac803cb.js"];
+    css7 = [];
+  }
+});
+
+// .svelte-kit/output/server/entries/pages/playground/index@default.svelte.js
+var index_default_svelte_exports = {};
+__export(index_default_svelte_exports, {
+  default: () => Index_default
+});
+var Index_default;
+var init_index_default_svelte = __esm({
+  ".svelte-kit/output/server/entries/pages/playground/index@default.svelte.js"() {
+    init_index_251281f1();
+    Index_default = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      return `<h1>Playgrounds</h1>
+
+Playgrounds and expirimentations built by contributors while learning Svelte.
+
+<h2>Games</h2>
+<ul><li><a href="${"/playground/tic-tac-toe"}">Tic Tac Toe</a></li></ul>
+
+<h2>Experiments</h2>
+<h2>Mouse Proximity Detection</h2>
+<ul><li><a href="${"/playground/mouse-proximity/radial"}">Detection by radial distance</a></li>
+    <li><a href="${"/playground/mouse-proximity/quadrant"}">Detection By Distance from Bounding Box</a></li>
+    <li><a href="${"/playground/mouse-proximity/intersection-observer"}">Detection By Intersection Observer API</a></li></ul>
+
+
+<h2>Scroll Effects</h2>
+<ul><li><a href="${"/playground/scroll/perspective"}">Perspective effects</a></li>
+</ul>`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/nodes/6.js
+var __exports7 = {};
+__export(__exports7, {
+  css: () => css8,
+  entry: () => entry7,
+  js: () => js7,
+  module: () => index_default_svelte_exports
+});
+var entry7, js7, css8;
+var init__7 = __esm({
+  ".svelte-kit/output/server/nodes/6.js"() {
+    init_index_default_svelte();
+    entry7 = "pages/playground/index@default.svelte-54a021b0.js";
+    js7 = ["pages/playground/index@default.svelte-54a021b0.js", "chunks/index-4ac803cb.js"];
+    css8 = [];
   }
 });
 
@@ -357,7 +511,7 @@ __export(index_svelte_exports2, {
 var Post;
 var init_index_svelte2 = __esm({
   ".svelte-kit/output/server/entries/pages/post/index.svelte.js"() {
-    init_index_7f83503c();
+    init_index_251281f1();
     Post = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       return `<h1>Blog homepage
     
@@ -366,279 +520,21 @@ var init_index_svelte2 = __esm({
   }
 });
 
-// .svelte-kit/output/server/nodes/8.js
-var __exports5 = {};
-__export(__exports5, {
-  css: () => css5,
-  entry: () => entry5,
-  js: () => js5,
+// .svelte-kit/output/server/nodes/14.js
+var __exports8 = {};
+__export(__exports8, {
+  css: () => css9,
+  entry: () => entry8,
+  js: () => js8,
   module: () => index_svelte_exports2
 });
-var entry5, js5, css5;
-var init__5 = __esm({
-  ".svelte-kit/output/server/nodes/8.js"() {
+var entry8, js8, css9;
+var init__8 = __esm({
+  ".svelte-kit/output/server/nodes/14.js"() {
     init_index_svelte2();
-    entry5 = "pages/post/index.svelte-7738ab27.js";
-    js5 = ["pages/post/index.svelte-7738ab27.js", "chunks/index-826e8f7e.js"];
-    css5 = [];
-  }
-});
-
-// .svelte-kit/output/server/entries/pages/playground/mouse-proximity.svelte.js
-var mouse_proximity_svelte_exports = {};
-__export(mouse_proximity_svelte_exports, {
-  default: () => Mouse_proximity
-});
-function writable2(value, start = noop) {
-  let stop;
-  const subscribers = /* @__PURE__ */ new Set();
-  function set(new_value) {
-    if (safe_not_equal(value, new_value)) {
-      value = new_value;
-      if (stop) {
-        const run_queue = !subscriber_queue2.length;
-        for (const subscriber of subscribers) {
-          subscriber[1]();
-          subscriber_queue2.push(subscriber, value);
-        }
-        if (run_queue) {
-          for (let i = 0; i < subscriber_queue2.length; i += 2) {
-            subscriber_queue2[i][0](subscriber_queue2[i + 1]);
-          }
-          subscriber_queue2.length = 0;
-        }
-      }
-    }
-  }
-  function update(fn) {
-    set(fn(value));
-  }
-  function subscribe2(run2, invalidate = noop) {
-    const subscriber = [run2, invalidate];
-    subscribers.add(subscriber);
-    if (subscribers.size === 1) {
-      stop = start(set) || noop;
-    }
-    run2(value);
-    return () => {
-      subscribers.delete(subscriber);
-      if (subscribers.size === 0) {
-        stop();
-        stop = null;
-      }
-    };
-  }
-  return { set, update, subscribe: subscribe2 };
-}
-function is_date(obj) {
-  return Object.prototype.toString.call(obj) === "[object Date]";
-}
-function get_interpolator(a, b) {
-  if (a === b || a !== a)
-    return () => a;
-  const type = typeof a;
-  if (type !== typeof b || Array.isArray(a) !== Array.isArray(b)) {
-    throw new Error("Cannot interpolate values of different type");
-  }
-  if (Array.isArray(a)) {
-    const arr = b.map((bi, i) => {
-      return get_interpolator(a[i], bi);
-    });
-    return (t) => arr.map((fn) => fn(t));
-  }
-  if (type === "object") {
-    if (!a || !b)
-      throw new Error("Object cannot be null");
-    if (is_date(a) && is_date(b)) {
-      a = a.getTime();
-      b = b.getTime();
-      const delta = b - a;
-      return (t) => new Date(a + t * delta);
-    }
-    const keys = Object.keys(b);
-    const interpolators = {};
-    keys.forEach((key2) => {
-      interpolators[key2] = get_interpolator(a[key2], b[key2]);
-    });
-    return (t) => {
-      const result = {};
-      keys.forEach((key2) => {
-        result[key2] = interpolators[key2](t);
-      });
-      return result;
-    };
-  }
-  if (type === "number") {
-    const delta = b - a;
-    return (t) => a + t * delta;
-  }
-  throw new Error(`Cannot interpolate ${type} values`);
-}
-function tweened(value, defaults = {}) {
-  const store = writable2(value);
-  let task;
-  let target_value = value;
-  function set(new_value, opts) {
-    if (value == null) {
-      store.set(value = new_value);
-      return Promise.resolve();
-    }
-    target_value = new_value;
-    let previous_task = task;
-    let started = false;
-    let { delay = 0, duration = 400, easing = identity, interpolate = get_interpolator } = assign(assign({}, defaults), opts);
-    if (duration === 0) {
-      if (previous_task) {
-        previous_task.abort();
-        previous_task = null;
-      }
-      store.set(value = target_value);
-      return Promise.resolve();
-    }
-    const start = now() + delay;
-    let fn;
-    task = loop((now2) => {
-      if (now2 < start)
-        return true;
-      if (!started) {
-        fn = interpolate(value, new_value);
-        if (typeof duration === "function")
-          duration = duration(value, new_value);
-        started = true;
-      }
-      if (previous_task) {
-        previous_task.abort();
-        previous_task = null;
-      }
-      const elapsed = now2 - start;
-      if (elapsed > duration) {
-        store.set(value = new_value);
-        return false;
-      }
-      store.set(value = fn(easing(elapsed / duration)));
-      return true;
-    });
-    return task.promise;
-  }
-  return {
-    set,
-    update: (fn, opts) => set(fn(target_value, value), opts),
-    subscribe: store.subscribe
-  };
-}
-var subscriber_queue2, scrollY, mouseX, mouseY, css$1, ProximityBox, css6, Mouse_proximity;
-var init_mouse_proximity_svelte = __esm({
-  ".svelte-kit/output/server/entries/pages/playground/mouse-proximity.svelte.js"() {
-    init_index_7f83503c();
-    subscriber_queue2 = [];
-    scrollY = writable2(0);
-    mouseX = writable2(0);
-    mouseY = writable2(0);
-    css$1 = {
-      code: "div.svelte-1jr8mbk{width:50vw;background:rgba(0,0,0,0.2);padding:2rem;display:flex;justify-content:center;align-items:center;text-align:center}div.is-near-hover.svelte-1jr8mbk{background:rgba(255,255,255,0.2)}",
-      map: null
-    };
-    ProximityBox = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$unsubscribe_mouseY;
-      let $$unsubscribe_mouseX;
-      $$unsubscribe_mouseY = subscribe(mouseY, (value) => value);
-      $$unsubscribe_mouseX = subscribe(mouseX, (value) => value);
-      let { radius = 20 } = $$props;
-      let box;
-      createEventDispatcher();
-      const determineProx = (mouseX2, mouseY2) => {
-      };
-      scrollY.subscribe(() => determineProx());
-      if ($$props.radius === void 0 && $$bindings.radius && radius !== void 0)
-        $$bindings.radius(radius);
-      $$result.css.add(css$1);
-      $$unsubscribe_mouseY();
-      $$unsubscribe_mouseX();
-      return `<div class="${["svelte-1jr8mbk", ""].join(" ").trim()}"${add_attribute("this", box, 0)}>${slots.default ? slots.default({}) : `${escape(radius)} Proximity Detection`}
-</div>`;
-    });
-    css6 = {
-      code: ".center-box.svelte-n3y3nt{display:flex;justify-content:center;align-items:center}.window-box.svelte-n3y3nt{background:linear-gradient(#e66465, #9198e5);height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center}.coords-box.svelte-n3y3nt{background-color:rgba(0,0,0,0.7);padding:1rem;color:#FFF;position:fixed;top:5px;left:5px}.chase-game.svelte-n3y3nt{padding:0;background:none;color:#FFF\n    }.chase-game.has-won.svelte-n3y3nt{background-color:green}.chase-game.svelte-n3y3nt:hover{cursor:pointer;background-color:green}",
-      map: null
-    };
-    Mouse_proximity = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $mouseX, $$unsubscribe_mouseX;
-      let $boxTranslateX, $$unsubscribe_boxTranslateX;
-      let $mouseY, $$unsubscribe_mouseY;
-      let $boxTranslateY, $$unsubscribe_boxTranslateY;
-      let $scrollY, $$unsubscribe_scrollY;
-      $$unsubscribe_mouseX = subscribe(mouseX, (value) => $mouseX = value);
-      $$unsubscribe_mouseY = subscribe(mouseY, (value) => $mouseY = value);
-      $$unsubscribe_scrollY = subscribe(scrollY, (value) => $scrollY = value);
-      let boxTranslateX = tweened(0, { duration: 200 });
-      $$unsubscribe_boxTranslateX = subscribe(boxTranslateX, (value) => $boxTranslateX = value);
-      let boxTranslateY = tweened(0, { duration: 200 });
-      $$unsubscribe_boxTranslateY = subscribe(boxTranslateY, (value) => $boxTranslateY = value);
-      let shadowRatio = 0;
-      let shadowSize = 0;
-      $$result.css.add(css6);
-      $$unsubscribe_mouseX();
-      $$unsubscribe_boxTranslateX();
-      $$unsubscribe_mouseY();
-      $$unsubscribe_boxTranslateY();
-      $$unsubscribe_scrollY();
-      return `${$$result.head += `${$$result.title = `<title>Svelte Playground: Mouse Proximity to Element Bounding Rectangle</title>`, ""}<meta name="${"description"}" content="${"A page to experiment with detecting when a mouse is within the proximity of an element's bounding rectangle"}" data-svelte="svelte-1jjbk91">`, ""}
-
-
-
-
-
-<div class="${"coords-box svelte-n3y3nt"}">The mouse position is ${escape($mouseX)} x (${escape($mouseY)} + ${escape($scrollY)} = ${escape($mouseY + $scrollY)})
-</div>
-
-<div class="${"window-box svelte-n3y3nt"}">${validate_component(ProximityBox, "ProximityBox").$$render($$result, { radius: 100 }, {}, {
-        default: () => {
-          return `Mouse detected within 100px`;
-        }
-      })}</div>
-
-<div class="${"window-box svelte-n3y3nt"}"><div style="${"display:grid;gap:10px"}"><button class="${["chase-game svelte-n3y3nt", ""].join(" ").trim()}"${add_styles({
-        "transform": `translate3d(${$boxTranslateX}px, ${$boxTranslateY}px, 0)`
-      })}>${validate_component(ProximityBox, "ProximityBox").$$render($$result, { radius: 80 }, {}, {
-        default: () => {
-          return `${`Try to catch me!`}`;
-        }
-      })}</button>
-        <button>Reset</button></div></div>
-<div class="${"window-box svelte-n3y3nt"}"><div${add_attribute("style", `transform: scale(${1 + 0.2 * shadowRatio}); box-shadow: 0 0 ${shadowSize}px ${shadowSize * 0.8}px rgba(0,0,0,0.35);`, 0)}>${validate_component(ProximityBox, "ProximityBox").$$render($$result, { radius: 200 }, {}, {
-        default: () => {
-          return `Highlight CTA
-        `;
-        }
-      })}</div></div>
-
-<div class="${"center-box svelte-n3y3nt"}"><div class="${"box"}"${add_styles({
-        "transform": `translate3d(0, ${$scrollY * -1}px, 0)`
-      })}>${validate_component(ProximityBox, "ProximityBox").$$render($$result, { radius: 60 }, {}, {
-        default: () => {
-          return `A box translating on scroll`;
-        }
-      })}</div>
-</div>`;
-    });
-  }
-});
-
-// .svelte-kit/output/server/nodes/4.js
-var __exports6 = {};
-__export(__exports6, {
-  css: () => css7,
-  entry: () => entry6,
-  js: () => js6,
-  module: () => mouse_proximity_svelte_exports
-});
-var entry6, js6, css7;
-var init__6 = __esm({
-  ".svelte-kit/output/server/nodes/4.js"() {
-    init_mouse_proximity_svelte();
-    entry6 = "pages/playground/mouse-proximity.svelte-134282ee.js";
-    js6 = ["pages/playground/mouse-proximity.svelte-134282ee.js", "chunks/index-826e8f7e.js", "chunks/index-5ffdce35.js"];
-    css7 = ["assets/pages/playground/mouse-proximity.svelte-7562d79a.css"];
+    entry8 = "pages/post/index.svelte-ab4aef82.js";
+    js8 = ["pages/post/index.svelte-ab4aef82.js", "chunks/index-4ac803cb.js"];
+    css9 = [];
   }
 });
 
@@ -647,22 +543,22 @@ var rock_paper_scissors_svelte_exports = {};
 __export(rock_paper_scissors_svelte_exports, {
   default: () => Rock_paper_scissors
 });
-var css$2, AboutRPS, css$12, computer, equals, paper, rock, scissors, Game, css8, Rock_paper_scissors;
+var css$2, AboutRPS, css$1, computer, equals, paper, rock, scissors, Game, css10, Rock_paper_scissors;
 var init_rock_paper_scissors_svelte = __esm({
   ".svelte-kit/output/server/entries/pages/playground/rock-paper-scissors.svelte.js"() {
-    init_index_7f83503c();
+    init_index_251281f1();
     css$2 = {
-      code: ".definition-list.svelte-7lgt5z{text-decoration:none;list-style:none;margin:2rem;text-align:left;padding-left:2rem}.image.svelte-7lgt5z{height:40px;width:auto;padding:1rem}.image-win.svelte-7lgt5z{height:45px;width:auto;filter:invert(40%) sepia(30%) saturate(600%) hue-rotate(90deg) brightness(90%) contrast(90%);padding:1rem}",
+      code: "button.svelte-6tgf1t:hover{cursor:pointer;background-color:teal;color:white}.definition-list.svelte-6tgf1t{text-decoration:none;list-style:none;margin:2rem;text-align:left;padding-left:2rem}.image.svelte-6tgf1t{height:100px !important;width:auto;padding:1rem}.image-win.svelte-6tgf1t{height:100px !important;width:auto;filter:invert(90%) sepia(50%) saturate(600%) hue-rotate(90deg) brightness(90%) contrast(90%);padding:1rem}",
       map: null
     };
     AboutRPS = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       $$result.css.add(css$2);
-      return `<button>How to play, if you&#39;ve been living under a rock</button>
+      return `<button class="${"svelte-6tgf1t"}">How to play, if you&#39;ve been living under a rock</button>
 
 ${``}`;
     });
-    css$12 = {
-      code: ".active.svelte-16asyi2:hover{background-color:lightblue !important;cursor:pointer;background-image:120%}.buttons.svelte-16asyi2{align-items:center;justify-content:center}.game-container.svelte-16asyi2{font-family:Arial, Helvetica, sans-serif}.text-center.svelte-16asyi2{text-align:center}.text-wrap-no.svelte-16asyi2{white-space:nowrap}.fs-larger.svelte-16asyi2{font-size:1.5em}.box.svelte-16asyi2{padding:1rem}.row.svelte-16asyi2{display:flex}.row-ai-center.svelte-16asyi2{align-items:center}.col.svelte-16asyi2{flex:1 1 0}.message.svelte-16asyi2{text-align:center;background:#efefef}.is-win.svelte-16asyi2{background:teal;color:#fff}.game-container.svelte-16asyi2{display:grid;gap:10px}.image.svelte-16asyi2{max-height:40px;width:auto;align-items:center;justify-content:center;text-align:center;padding:1rem}",
+    css$1 = {
+      code: ".active.svelte-ed6u8x:hover{background-color:lightblue !important;cursor:pointer;background-image:120%}.buttons.svelte-ed6u8x{align-items:center;justify-content:center}.game-container.svelte-ed6u8x{font-family:Arial, Helvetica, sans-serif}.text-center.svelte-ed6u8x{text-align:center}.text-wrap-no.svelte-ed6u8x{white-space:nowrap}.fs-larger.svelte-ed6u8x{font-size:1.5em}.box.svelte-ed6u8x{padding:1rem}.row.svelte-ed6u8x{display:flex}.row-ai-center.svelte-ed6u8x{align-items:center}.col.svelte-ed6u8x{flex:1 1 0}.message.svelte-ed6u8x{text-align:center;background:#efefef}.is-win.svelte-ed6u8x{background:teal;color:#fff}.game-container.svelte-ed6u8x{display:grid;gap:10px}.image.svelte-ed6u8x{height:100px!important;width:auto;align-items:center;justify-content:center;text-align:center;padding:1rem}",
       map: null
     };
     computer = "/computer.svg";
@@ -674,32 +570,32 @@ ${``}`;
       console.log(equals);
       let choice = "";
       let computerChoice = "";
-      $$result.css.add(css$12);
-      return `<main class="${"game-container svelte-16asyi2"}">${validate_component(AboutRPS, "AboutRPS").$$render($$result, {}, {}, {})}
+      $$result.css.add(css$1);
+      return `<main class="${"game-container svelte-ed6u8x"}">${validate_component(AboutRPS, "AboutRPS").$$render($$result, {}, {}, {})}
 	
 	<div>${`<span>Choose an icon to play.</span>`}</div>
-	<div class="${"row svelte-16asyi2"}"><div class="${"col box text-center message row row-ai-center text-wrap-no svelte-16asyi2"}" id="${"turn-label"}">${`${`<span class="${"row row-ai-center svelte-16asyi2"}">The winner is: computer<img class="${"image svelte-16asyi2"}" alt="${"medal"}"${add_attribute("src", computer, 0)}></span>`}`}</div></div>
+	<div class="${"row svelte-ed6u8x"}"><div class="${"col box text-center message row row-ai-center text-wrap-no svelte-ed6u8x"}" id="${"turn-label"}">${`${`<span class="${"row row-ai-center svelte-ed6u8x"}">The winner is: computer<img class="${"image svelte-ed6u8x"}" alt="${"medal"}"${add_attribute("src", computer, 0)}></span>`}`}</div></div>
 
 	
-	<div class="${"fs-larger text-center  svelte-16asyi2"}">Choose rock, paper, or scissors.
+	<div class="${"fs-larger text-center  svelte-ed6u8x"}">Choose rock, paper, or scissors.
 		<hr>
-		<div class="${"row buttons svelte-16asyi2"}"><img class="${"image active svelte-16asyi2"}" alt="${"rock"}"${add_attribute("src", rock, 0)}>
+		<div class="${"row buttons svelte-ed6u8x"}"><img class="${"image active svelte-ed6u8x"}" alt="${"rock"}"${add_attribute("src", rock, 0)}>
 
-			<img class="${"image active svelte-16asyi2"}" alt="${"paper"}"${add_attribute("src", paper, 0)}>
+			<img class="${"image active svelte-ed6u8x"}" alt="${"paper"}"${add_attribute("src", paper, 0)}>
 
-			<img class="${"image active svelte-16asyi2"}" alt="${"scissors"}"${add_attribute("src", scissors, 0)}></div></div>
+			<img class="${"image active svelte-ed6u8x"}" alt="${"scissors"}"${add_attribute("src", scissors, 0)}></div></div>
 
-	${`<span class="${"col text-center choices svelte-16asyi2"}">${escape(choice)}</span>`}
+	${`<span class="${"col text-center choices svelte-ed6u8x"}">${escape(choice)}</span>`}
 
-	${`<span class="${"col text-center computerChoices  svelte-16asyi2"}">${escape(computerChoice)}</span>`}
+	${`<span class="${"col text-center computerChoices  svelte-ed6u8x"}">${escape(computerChoice)}</span>`}
 </main>`;
     });
-    css8 = {
+    css10 = {
       code: ".window.svelte-1sly5wv{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center}",
       map: null
     };
     Rock_paper_scissors = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      $$result.css.add(css8);
+      $$result.css.add(css10);
       return `
 
 ${$$result.head += `${$$result.title = `<title>Svelte Playground: Rock, paper, scissors by Kim Moran</title>`, ""}<meta name="${"description"}" content="${"Rock, paper, scissors, built in SvelteKit by Kim Moran"}" data-svelte="svelte-1bipv6x">`, ""}
@@ -710,21 +606,21 @@ ${$$result.head += `${$$result.title = `<title>Svelte Playground: Rock, paper, s
   }
 });
 
-// .svelte-kit/output/server/nodes/5.js
-var __exports7 = {};
-__export(__exports7, {
-  css: () => css9,
-  entry: () => entry7,
-  js: () => js7,
+// .svelte-kit/output/server/nodes/10.js
+var __exports9 = {};
+__export(__exports9, {
+  css: () => css11,
+  entry: () => entry9,
+  js: () => js9,
   module: () => rock_paper_scissors_svelte_exports
 });
-var entry7, js7, css9;
-var init__7 = __esm({
-  ".svelte-kit/output/server/nodes/5.js"() {
+var entry9, js9, css11;
+var init__9 = __esm({
+  ".svelte-kit/output/server/nodes/10.js"() {
     init_rock_paper_scissors_svelte();
-    entry7 = "pages/playground/rock-paper-scissors.svelte-190b3b2d.js";
-    js7 = ["pages/playground/rock-paper-scissors.svelte-190b3b2d.js", "chunks/index-826e8f7e.js", "chunks/index-c15752f6.js"];
-    css9 = ["assets/pages/playground/rock-paper-scissors.svelte-433395a4.css"];
+    entry9 = "pages/playground/rock-paper-scissors.svelte-e4ddb890.js";
+    js9 = ["pages/playground/rock-paper-scissors.svelte-e4ddb890.js", "chunks/index-4ac803cb.js", "chunks/index-3d2bd790.js"];
+    css11 = ["assets/pages/playground/rock-paper-scissors.svelte-ad141d87.css"];
   }
 });
 
@@ -733,10 +629,10 @@ var tic_tac_toe_svelte_exports = {};
 __export(tic_tac_toe_svelte_exports, {
   default: () => Tic_tac_toe
 });
-var css$22, GameTile, Tile, getAdjacentLeft, getAdjacentRight, getAdjacentLeftRight, getAdjacentUp, getAdjacentDown, getAdjacentUpDown, getDiagonalUpRight, getDiagonalUpLeft, getDiagonalDownRight, getDiagonalDownLeft, getDiagonalUpLeftDownRight, getDiagonalUpRightDownLeft, checks, getWinningCoords, css$13, Game2, css10, Tic_tac_toe;
+var css$22, GameTile, Tile, getAdjacentLeft, getAdjacentRight, getAdjacentLeftRight, getAdjacentUp, getAdjacentDown, getAdjacentUpDown, getDiagonalUpRight, getDiagonalUpLeft, getDiagonalDownRight, getDiagonalDownLeft, getDiagonalUpLeftDownRight, getDiagonalUpRightDownLeft, checks, getWinningCoords, css$12, Game2, css12, Tic_tac_toe;
 var init_tic_tac_toe_svelte = __esm({
   ".svelte-kit/output/server/entries/pages/playground/tic-tac-toe.svelte.js"() {
-    init_index_7f83503c();
+    init_index_251281f1();
     css$22 = {
       code: '.tile.svelte-4bkcom.svelte-4bkcom{border:1px solid #000;font-size:2em;display:flex;padding:0;align-items:stretch}.tile.svelte-4bkcom.svelte-4bkcom:hover{cursor:pointer}.tile[aria-pressed="true"].svelte-4bkcom.svelte-4bkcom:hover,.tile.svelte-4bkcom.svelte-4bkcom:disabled{cursor:auto}.tile.svelte-4bkcom>span.svelte-4bkcom{display:block;flex-basis:100%;display:flex;justify-content:center;align-items:center}.tile.is-x.svelte-4bkcom>span.svelte-4bkcom{background:#1e92af;color:#FFF}.tile.is-o.svelte-4bkcom>span.svelte-4bkcom{background:#d1491c;color:#FFF}.tile.is-winning.svelte-4bkcom>span.svelte-4bkcom{background:#149e16;color:#FFF}',
       map: null
@@ -856,7 +752,7 @@ var init_tic_tac_toe_svelte = __esm({
       }
       return false;
     };
-    css$13 = {
+    css$12 = {
       code: ".game-container.svelte-1q5bu8f{font-family:Arial, Helvetica, sans-serif}.text-center.svelte-1q5bu8f{text-align:center}.text-wrap-no.svelte-1q5bu8f{white-space:nowrap}.fs-larger.svelte-1q5bu8f{font-size:1.5em}.is-x.svelte-1q5bu8f{background:#1e92af;color:#FFF}.is-o.svelte-1q5bu8f{background:#d1491c;color:#FFF}.box.svelte-1q5bu8f{padding:1rem}.row.svelte-1q5bu8f{display:flex}.row-ai-center.svelte-1q5bu8f{align-items:center}.col.svelte-1q5bu8f{flex:1 1 0}.message.svelte-1q5bu8f{text-align:center;background:#EFEFEF}.is-win.svelte-1q5bu8f{background:#149e16;color:#FFF}.game-container.svelte-1q5bu8f{display:grid;gap:10px}.game-box.svelte-1q5bu8f{width:300px;max-width:100%;background:#DEDEDE}.game-box--inner.svelte-1q5bu8f{width:100%;position:relative;padding-top:100%}.game-grid.svelte-1q5bu8f{width:100%;height:100%;position:absolute;top:0;left:0;display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr 1fr;border:1px solid #000}button.svelte-1q5bu8f{padding:.5rem 1rem\n    }button.svelte-1q5bu8f:hover{cursor:pointer}",
       map: null
     };
@@ -868,7 +764,7 @@ var init_tic_tac_toe_svelte = __esm({
       let winningTiles = false;
       for (let i = 0; i < 9; i++)
         tiles.push(new Tile(i));
-      $$result.css.add(css$13);
+      $$result.css.add(css$12);
       {
         {
           winningTiles = getWinningCoords(lastCoord, tiles);
@@ -891,12 +787,12 @@ var init_tic_tac_toe_svelte = __esm({
     <button title="${"Reset the game board"}" class="${"svelte-1q5bu8f"}">Reset</button>
 </div>`;
     });
-    css10 = {
+    css12 = {
       code: ".window.svelte-1f34dlt{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center}",
       map: null
     };
     Tic_tac_toe = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      $$result.css.add(css10);
+      $$result.css.add(css12);
       return `${$$result.head += `${$$result.title = `<title>Svelte Playground: Tic Tac Toe by Anthony Brown</title>`, ""}<meta name="${"description"}" content="${"A Tic Tac Toe game board built in SvelteKit by Anthony Brown"}" data-svelte="svelte-1uavdkb">`, ""}
 
 
@@ -907,21 +803,477 @@ var init_tic_tac_toe_svelte = __esm({
   }
 });
 
-// .svelte-kit/output/server/nodes/6.js
-var __exports8 = {};
-__export(__exports8, {
-  css: () => css11,
-  entry: () => entry8,
-  js: () => js8,
+// .svelte-kit/output/server/nodes/12.js
+var __exports10 = {};
+__export(__exports10, {
+  css: () => css13,
+  entry: () => entry10,
+  js: () => js10,
   module: () => tic_tac_toe_svelte_exports
 });
-var entry8, js8, css11;
-var init__8 = __esm({
-  ".svelte-kit/output/server/nodes/6.js"() {
+var entry10, js10, css13;
+var init__10 = __esm({
+  ".svelte-kit/output/server/nodes/12.js"() {
     init_tic_tac_toe_svelte();
-    entry8 = "pages/playground/tic-tac-toe.svelte-fb994d2a.js";
-    js8 = ["pages/playground/tic-tac-toe.svelte-fb994d2a.js", "chunks/index-826e8f7e.js", "chunks/index-c15752f6.js"];
-    css11 = ["assets/pages/playground/tic-tac-toe.svelte-a77378cb.css"];
+    entry10 = "pages/playground/tic-tac-toe.svelte-eaca0ad9.js";
+    js10 = ["pages/playground/tic-tac-toe.svelte-eaca0ad9.js", "chunks/index-4ac803cb.js", "chunks/index-3d2bd790.js"];
+    css13 = ["assets/pages/playground/tic-tac-toe.svelte-a77378cb.css"];
+  }
+});
+
+// .svelte-kit/output/server/chunks/index-8c38a39e.js
+function readable2(value, start) {
+  return {
+    subscribe: writable2(value, start).subscribe
+  };
+}
+function writable2(value, start = noop) {
+  let stop;
+  const subscribers = /* @__PURE__ */ new Set();
+  function set(new_value) {
+    if (safe_not_equal(value, new_value)) {
+      value = new_value;
+      if (stop) {
+        const run_queue = !subscriber_queue2.length;
+        for (const subscriber of subscribers) {
+          subscriber[1]();
+          subscriber_queue2.push(subscriber, value);
+        }
+        if (run_queue) {
+          for (let i = 0; i < subscriber_queue2.length; i += 2) {
+            subscriber_queue2[i][0](subscriber_queue2[i + 1]);
+          }
+          subscriber_queue2.length = 0;
+        }
+      }
+    }
+  }
+  function update(fn) {
+    set(fn(value));
+  }
+  function subscribe2(run2, invalidate = noop) {
+    const subscriber = [run2, invalidate];
+    subscribers.add(subscriber);
+    if (subscribers.size === 1) {
+      stop = start(set) || noop;
+    }
+    run2(value);
+    return () => {
+      subscribers.delete(subscriber);
+      if (subscribers.size === 0) {
+        stop();
+        stop = null;
+      }
+    };
+  }
+  return { set, update, subscribe: subscribe2 };
+}
+var subscriber_queue2;
+var init_index_8c38a39e = __esm({
+  ".svelte-kit/output/server/chunks/index-8c38a39e.js"() {
+    init_index_251281f1();
+    subscriber_queue2 = [];
+  }
+});
+
+// .svelte-kit/output/server/chunks/stores-5d1c0feb.js
+var scrollY, mouseCoords;
+var init_stores_5d1c0feb = __esm({
+  ".svelte-kit/output/server/chunks/stores-5d1c0feb.js"() {
+    init_index_8c38a39e();
+    scrollY = writable2(0);
+    mouseCoords = readable2({ x: 0, y: 0 }, (set) => {
+      return;
+    });
+  }
+});
+
+// .svelte-kit/output/server/entries/pages/playground/mouse-proximity/intersection-observer.svelte.js
+var intersection_observer_svelte_exports = {};
+__export(intersection_observer_svelte_exports, {
+  default: () => Intersection_observer
+});
+var css14, gridBoxesCount, Intersection_observer;
+var init_intersection_observer_svelte = __esm({
+  ".svelte-kit/output/server/entries/pages/playground/mouse-proximity/intersection-observer.svelte.js"() {
+    init_index_251281f1();
+    init_stores_5d1c0feb();
+    init_index_8c38a39e();
+    css14 = {
+      code: ".window-box.svelte-7yoork{background:linear-gradient(#e66465, #9198e5);height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center}.chase-target.svelte-7yoork{position:relative;background:rgba(0,0,0,.9);width:20px;height:20px;padding:0;color:#FFF;line-height:20px}.chase-target.in-prox{background:rgba(255,255,255,.9);color:#000}.grid-box.svelte-7yoork{display:grid;gap:5px;grid-template-columns:repeat(10, 20px);grid-template-columns:repeat(10, 20px)}.prox-target.svelte-7yoork{position:relative;background:rgba(0,0,0,.9);padding:0;color:#FFF;line-height:20px}.prox-target.in-prox{background:rgba(255,255,255,.9);color:#000}.coords-box.svelte-7yoork{background-color:rgba(0,0,0,0.7);padding:1rem;color:#FFF;position:fixed;top:5px;left:5px}",
+      map: null
+    };
+    gridBoxesCount = 100;
+    Intersection_observer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $mouseCoords, $$unsubscribe_mouseCoords;
+      $$unsubscribe_mouseCoords = subscribe(mouseCoords, (value) => $mouseCoords = value);
+      let gridBoxes = [];
+      for (let i = 0; i < gridBoxesCount; i++)
+        gridBoxes.push({ id: i, inprox: false });
+      $$result.css.add(css14);
+      $$unsubscribe_mouseCoords();
+      return `${$$result.head += `${$$result.title = `<title>Svelte Playground: Mouse Proximity with Intersection Observer API</title>`, ""}<meta name="${"description"}" content="${"A page to experiment with detecting when a mouse is within the proximity of an element using the Intersection Observer API"}" data-svelte="svelte-1uk04y1">`, ""}
+
+
+
+<div class="${"window-box svelte-7yoork"}"><button class="${["chase-target svelte-7yoork", ""].join(" ").trim()}">X
+    </button></div>
+<div class="${"window-box svelte-7yoork"}"><button class="${"chase-target svelte-7yoork"}">X</button></div>
+<div class="${"window-box svelte-7yoork"}"><div class="${"grid-box svelte-7yoork"}">${each(gridBoxes, (gridBox) => {
+        return `<button class="${["prox-target svelte-7yoork", gridBox.inprox ? "in-prox" : ""].join(" ").trim()}">X
+            </button>`;
+      })}</div></div>
+
+
+<span class="${"coords-box svelte-7yoork"}">${escape($mouseCoords.x)} ${escape($mouseCoords.y)}</span>
+`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/nodes/7.js
+var __exports11 = {};
+__export(__exports11, {
+  css: () => css15,
+  entry: () => entry11,
+  js: () => js11,
+  module: () => intersection_observer_svelte_exports
+});
+var entry11, js11, css15;
+var init__11 = __esm({
+  ".svelte-kit/output/server/nodes/7.js"() {
+    init_intersection_observer_svelte();
+    entry11 = "pages/playground/mouse-proximity/intersection-observer.svelte-f55e7d1b.js";
+    js11 = ["pages/playground/mouse-proximity/intersection-observer.svelte-f55e7d1b.js", "chunks/index-4ac803cb.js", "chunks/stores-cc60fa12.js", "chunks/index-051037f6.js"];
+    css15 = ["assets/pages/playground/mouse-proximity/intersection-observer.svelte-72f5bc78.css"];
+  }
+});
+
+// .svelte-kit/output/server/entries/pages/playground/mouse-proximity/quadrant.svelte.js
+var quadrant_svelte_exports = {};
+__export(quadrant_svelte_exports, {
+  default: () => Quadrant
+});
+function is_date(obj) {
+  return Object.prototype.toString.call(obj) === "[object Date]";
+}
+function get_interpolator(a, b) {
+  if (a === b || a !== a)
+    return () => a;
+  const type = typeof a;
+  if (type !== typeof b || Array.isArray(a) !== Array.isArray(b)) {
+    throw new Error("Cannot interpolate values of different type");
+  }
+  if (Array.isArray(a)) {
+    const arr = b.map((bi, i) => {
+      return get_interpolator(a[i], bi);
+    });
+    return (t) => arr.map((fn) => fn(t));
+  }
+  if (type === "object") {
+    if (!a || !b)
+      throw new Error("Object cannot be null");
+    if (is_date(a) && is_date(b)) {
+      a = a.getTime();
+      b = b.getTime();
+      const delta = b - a;
+      return (t) => new Date(a + t * delta);
+    }
+    const keys = Object.keys(b);
+    const interpolators = {};
+    keys.forEach((key2) => {
+      interpolators[key2] = get_interpolator(a[key2], b[key2]);
+    });
+    return (t) => {
+      const result = {};
+      keys.forEach((key2) => {
+        result[key2] = interpolators[key2](t);
+      });
+      return result;
+    };
+  }
+  if (type === "number") {
+    const delta = b - a;
+    return (t) => a + t * delta;
+  }
+  throw new Error(`Cannot interpolate ${type} values`);
+}
+function tweened(value, defaults = {}) {
+  const store = writable2(value);
+  let task;
+  let target_value = value;
+  function set(new_value, opts) {
+    if (value == null) {
+      store.set(value = new_value);
+      return Promise.resolve();
+    }
+    target_value = new_value;
+    let previous_task = task;
+    let started = false;
+    let { delay = 0, duration = 400, easing = identity, interpolate = get_interpolator } = assign(assign({}, defaults), opts);
+    if (duration === 0) {
+      if (previous_task) {
+        previous_task.abort();
+        previous_task = null;
+      }
+      store.set(value = target_value);
+      return Promise.resolve();
+    }
+    const start = now() + delay;
+    let fn;
+    task = loop((now2) => {
+      if (now2 < start)
+        return true;
+      if (!started) {
+        fn = interpolate(value, new_value);
+        if (typeof duration === "function")
+          duration = duration(value, new_value);
+        started = true;
+      }
+      if (previous_task) {
+        previous_task.abort();
+        previous_task = null;
+      }
+      const elapsed = now2 - start;
+      if (elapsed > duration) {
+        store.set(value = new_value);
+        return false;
+      }
+      store.set(value = fn(easing(elapsed / duration)));
+      return true;
+    });
+    return task.promise;
+  }
+  return {
+    set,
+    update: (fn, opts) => set(fn(target_value, value), opts),
+    subscribe: store.subscribe
+  };
+}
+var css$13, ProximityBox, css16, Quadrant;
+var init_quadrant_svelte = __esm({
+  ".svelte-kit/output/server/entries/pages/playground/mouse-proximity/quadrant.svelte.js"() {
+    init_index_251281f1();
+    init_index_8c38a39e();
+    init_stores_5d1c0feb();
+    css$13 = {
+      code: "div.svelte-1evllae{max-width:100%;width:50vw;background:rgba(0,0,0,0.2);padding:2rem;display:flex;justify-content:center;align-items:center;text-align:center}div.is-near-hover.svelte-1evllae{background:rgba(255,255,255,0.2)}",
+      map: null
+    };
+    ProximityBox = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$unsubscribe_mouseCoords;
+      $$unsubscribe_mouseCoords = subscribe(mouseCoords, (value) => value);
+      let { radius = 20 } = $$props;
+      let box;
+      const dispatch = createEventDispatcher();
+      onDestroy(() => {
+      });
+      if ($$props.radius === void 0 && $$bindings.radius && radius !== void 0)
+        $$bindings.radius(radius);
+      $$result.css.add(css$13);
+      {
+        {
+          dispatch("leavescreen");
+        }
+      }
+      $$unsubscribe_mouseCoords();
+      return `<div class="${["svelte-1evllae", ""].join(" ").trim()}"${add_attribute("this", box, 0)}>${slots.default ? slots.default({}) : `${escape(radius)} Proximity Detection`}
+</div>`;
+    });
+    css16 = {
+      code: ".center-box.svelte-a9suvs{display:flex;justify-content:center;align-items:center}.window-box.svelte-a9suvs{background:linear-gradient(#e66465, #9198e5);height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center}.coords-box.svelte-a9suvs{background-color:rgba(0,0,0,0.7);padding:1rem;color:#FFF;position:fixed;top:5px;left:5px}.chase-game.svelte-a9suvs{padding:0;background:none;color:#FFF\n    }.has-won.svelte-a9suvs{background-color:green;color:#FFF\n    }.chase-game.svelte-a9suvs:hover{background-color:green}button.svelte-a9suvs:hover{cursor:pointer}",
+      map: null
+    };
+    Quadrant = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $mouseCoords, $$unsubscribe_mouseCoords;
+      let $boxTranslateX, $$unsubscribe_boxTranslateX;
+      let $boxTranslateY, $$unsubscribe_boxTranslateY;
+      let $scrollY, $$unsubscribe_scrollY;
+      $$unsubscribe_mouseCoords = subscribe(mouseCoords, (value) => $mouseCoords = value);
+      $$unsubscribe_scrollY = subscribe(scrollY, (value) => $scrollY = value);
+      const chaseOptions = { duration: 120 };
+      let boxTranslateX = tweened(0, chaseOptions);
+      $$unsubscribe_boxTranslateX = subscribe(boxTranslateX, (value) => $boxTranslateX = value);
+      let boxTranslateY = tweened(0, chaseOptions);
+      $$unsubscribe_boxTranslateY = subscribe(boxTranslateY, (value) => $boxTranslateY = value);
+      let shadowRatio = 0;
+      let shadowSize = 0;
+      $$result.css.add(css16);
+      $$unsubscribe_mouseCoords();
+      $$unsubscribe_boxTranslateX();
+      $$unsubscribe_boxTranslateY();
+      $$unsubscribe_scrollY();
+      return `${$$result.head += `${$$result.title = `<title>Svelte Playground: Mouse Proximity to Element Bounding Rectangle</title>`, ""}<meta name="${"description"}" content="${"A page to experiment with detecting when a mouse is within the proximity of an element's bounding rectangle"}" data-svelte="svelte-1jjbk91">`, ""}
+
+
+
+
+
+<div class="${"coords-box svelte-a9suvs"}">The mouse position is ${escape($mouseCoords.x)} x (${escape($mouseCoords.y)} + ${escape($scrollY)} = ${escape($mouseCoords.y + $scrollY)})
+</div>
+
+<div class="${"window-box svelte-a9suvs"}">${validate_component(ProximityBox, "ProximityBox").$$render($$result, { radius: 120 }, {}, {
+        default: () => {
+          return `Mouse detected within 100px`;
+        }
+      })}</div>
+
+<div class="${"window-box svelte-a9suvs"}"><div style="${"display:grid;gap:10px;"}"><button class="${["chase-game svelte-a9suvs", ""].join(" ").trim()}"${add_styles(merge_ssr_styles("width:200px", {
+        "transform": `translate3d(${$boxTranslateX}px, ${$boxTranslateY}px, 0)`
+      }))}>${validate_component(ProximityBox, "ProximityBox").$$render($$result, { radius: 120 }, {}, {
+        default: () => {
+          return `${`Try to catch me!`}`;
+        }
+      })}</button>
+        ${``}</div></div>
+<div class="${"window-box svelte-a9suvs"}"><div${add_attribute("style", `transform: scale(${1 + 0.2 * shadowRatio}); box-shadow: 0 0 ${shadowSize}px ${shadowSize * 0.8}px rgba(0,0,0,0.35);`, 0)}>${validate_component(ProximityBox, "ProximityBox").$$render($$result, { radius: 200 }, {}, {
+        default: () => {
+          return `Highlight CTA
+        `;
+        }
+      })}</div></div>
+
+<div class="${"center-box svelte-a9suvs"}"><div class="${"box"}"${add_styles({
+        "transform": `translate3d(0, ${$scrollY * -1}px, 0)`
+      })}>${validate_component(ProximityBox, "ProximityBox").$$render($$result, { radius: 60 }, {}, {
+        default: () => {
+          return `A box translating on scroll`;
+        }
+      })}</div>
+</div>`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/nodes/8.js
+var __exports12 = {};
+__export(__exports12, {
+  css: () => css17,
+  entry: () => entry12,
+  js: () => js12,
+  module: () => quadrant_svelte_exports
+});
+var entry12, js12, css17;
+var init__12 = __esm({
+  ".svelte-kit/output/server/nodes/8.js"() {
+    init_quadrant_svelte();
+    entry12 = "pages/playground/mouse-proximity/quadrant.svelte-b2909cee.js";
+    js12 = ["pages/playground/mouse-proximity/quadrant.svelte-b2909cee.js", "chunks/index-4ac803cb.js", "chunks/index-051037f6.js", "chunks/stores-cc60fa12.js"];
+    css17 = ["assets/pages/playground/mouse-proximity/quadrant.svelte-61d4a2f5.css"];
+  }
+});
+
+// .svelte-kit/output/server/entries/pages/playground/mouse-proximity/radial.svelte.js
+var radial_svelte_exports = {};
+__export(radial_svelte_exports, {
+  default: () => Radial
+});
+var css18, Radial;
+var init_radial_svelte = __esm({
+  ".svelte-kit/output/server/entries/pages/playground/mouse-proximity/radial.svelte.js"() {
+    init_index_251281f1();
+    init_stores_5d1c0feb();
+    init_index_8c38a39e();
+    css18 = {
+      code: ".windox-box.svelte-56a9ra{height:100vh;display:flex;flex-direction:column;text-align:center;gap:20px;justify-content:center;align-items:center}.target.svelte-56a9ra{width:100px;height:100px;border-radius:100px;background:red;position:relative}.target-radius.svelte-56a9ra{border:1px dashed red;border-radius:999999px}",
+      map: null
+    };
+    Radial = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let targetRadius = 50;
+      let mouseProx = { distance: 0, ratio: 0 };
+      let ratioPercent = 0;
+      $$result.css.add(css18);
+      ratioPercent = Math.round(mouseProx.ratio * 100);
+      return `${$$result.head += `${$$result.title = `<title>Svelte Playground: Radial Mouse Proximity Detection</title>`, ""}<meta name="${"description"}" content="${"An example of radial mouse proximity detection by Anthony Brown"}" data-svelte="svelte-1g2w3w8">`, ""}
+
+
+<div class="${"windox-box svelte-56a9ra"}"><div><label for="${"radius"}">Detection Radius</label><br>
+        <input type="${"number"}" id="${"radius"}"${add_attribute("value", targetRadius, 0)}></div>
+    <div>Distance: ${escape(mouseProx.distance)} | Proximity Ratio: ${escape(ratioPercent)}%</div>
+    <div class="${"target-radius svelte-56a9ra"}"><div class="${"target svelte-56a9ra"}"${add_styles({
+        "background": `rgba(0,0,0,${mouseProx.ratio})`,
+        "margin": `${targetRadius}px`
+      })}></div></div></div>
+`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/nodes/9.js
+var __exports13 = {};
+__export(__exports13, {
+  css: () => css19,
+  entry: () => entry13,
+  js: () => js13,
+  module: () => radial_svelte_exports
+});
+var entry13, js13, css19;
+var init__13 = __esm({
+  ".svelte-kit/output/server/nodes/9.js"() {
+    init_radial_svelte();
+    entry13 = "pages/playground/mouse-proximity/radial.svelte-3ed77df8.js";
+    js13 = ["pages/playground/mouse-proximity/radial.svelte-3ed77df8.js", "chunks/index-4ac803cb.js", "chunks/stores-cc60fa12.js", "chunks/index-051037f6.js"];
+    css19 = ["assets/pages/playground/mouse-proximity/radial.svelte-82d18487.css"];
+  }
+});
+
+// .svelte-kit/output/server/entries/pages/playground/scroll/perspective.svelte.js
+var perspective_svelte_exports = {};
+__export(perspective_svelte_exports, {
+  default: () => Perspective
+});
+var css20, Perspective;
+var init_perspective_svelte = __esm({
+  ".svelte-kit/output/server/entries/pages/playground/scroll/perspective.svelte.js"() {
+    init_index_251281f1();
+    init_index_8c38a39e();
+    css20 = {
+      code: '.window-box.svelte-1cduccq{position:relative;overflow:hidden;height:100vh}.layer.svelte-1cduccq{width:100%;left:0;position:absolute;bottom:0}.bg-dark.svelte-1cduccq{background-color:#000}.box-0.svelte-1cduccq{height:80vh;background-color:#EEE}.box-1.svelte-1cduccq{height:60vh;background-color:#AAA}.box-2.svelte-1cduccq{height:40vh;background-color:#777}.box-3.svelte-1cduccq{height:20vh;background-color:#333}.horizon.svelte-1cduccq{border-radius:40em/2em;border-bottom-left-radius:0;border-bottom-right-radius:0;background-color:#333;height:60vh;perspective:40vh;overflow:hidden;transform-origin:center bottom}.street.svelte-1cduccq{background-color:#FFF;width:20vw;left:calc(50% - 10vw);height:100%;transform-origin:center top}.street.svelte-1cduccq:after{content:"";position:absolute;left:calc(50% - 1px - .25vw);height:100%;width:2px;border:.5vw dashed #000}',
+      map: null
+    };
+    Perspective = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$unsubscribe_y;
+      const y = writable2(0);
+      $$unsubscribe_y = subscribe(y, (value) => value);
+      let layers = [0, 1, 2, 3];
+      $$result.css.add(css20);
+      $$unsubscribe_y();
+      return `
+
+<div class="${"window-box svelte-1cduccq"}">${each(layers, (layer) => {
+        return `<div class="${escape(null_to_empty(`layer box-${layer}`)) + " svelte-1cduccq"}"></div>`;
+      })}</div>
+
+<div class="${"window-box bg-dark svelte-1cduccq"}"></div>
+
+<div class="${"window-box svelte-1cduccq"}">${each(layers, (layer) => {
+        return `<div class="${escape(null_to_empty(`layer box-${layer}`)) + " svelte-1cduccq"}"></div>`;
+      })}</div>
+
+<div class="${"window-box bg-dark svelte-1cduccq"}"></div>
+
+<div class="${"window-box bg-dark svelte-1cduccq"}"><div class="${"horizon layer svelte-1cduccq"}"><div class="${"street layer svelte-1cduccq"}"></div></div></div>
+
+<div class="${"window-box bg-dark svelte-1cduccq"}"></div>`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/nodes/11.js
+var __exports14 = {};
+__export(__exports14, {
+  css: () => css21,
+  entry: () => entry14,
+  js: () => js14,
+  module: () => perspective_svelte_exports
+});
+var entry14, js14, css21;
+var init__14 = __esm({
+  ".svelte-kit/output/server/nodes/11.js"() {
+    init_perspective_svelte();
+    entry14 = "pages/playground/scroll/perspective.svelte-b764611d.js";
+    js14 = ["pages/playground/scroll/perspective.svelte-b764611d.js", "chunks/index-4ac803cb.js", "chunks/index-051037f6.js"];
+    css21 = ["assets/pages/playground/scroll/perspective.svelte-f5bfa9d7.css"];
   }
 });
 
@@ -937,7 +1289,7 @@ async function load2({ params }) {
 var U5BpostIdu5D;
 var init_postId_svelte = __esm({
   ".svelte-kit/output/server/entries/pages/post/_postId_.svelte.js"() {
-    init_index_7f83503c();
+    init_index_251281f1();
     U5BpostIdu5D = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { postId = 0 } = $$props;
       if ($$props.postId === void 0 && $$bindings.postId && postId !== void 0)
@@ -947,21 +1299,21 @@ var init_postId_svelte = __esm({
   }
 });
 
-// .svelte-kit/output/server/nodes/7.js
-var __exports9 = {};
-__export(__exports9, {
-  css: () => css12,
-  entry: () => entry9,
-  js: () => js9,
+// .svelte-kit/output/server/nodes/13.js
+var __exports15 = {};
+__export(__exports15, {
+  css: () => css22,
+  entry: () => entry15,
+  js: () => js15,
   module: () => postId_svelte_exports
 });
-var entry9, js9, css12;
-var init__9 = __esm({
-  ".svelte-kit/output/server/nodes/7.js"() {
+var entry15, js15, css22;
+var init__15 = __esm({
+  ".svelte-kit/output/server/nodes/13.js"() {
     init_postId_svelte();
-    entry9 = "pages/post/_postId_.svelte-79c25389.js";
-    js9 = ["pages/post/_postId_.svelte-79c25389.js", "chunks/index-826e8f7e.js"];
-    css12 = [];
+    entry15 = "pages/post/_postId_.svelte-508a5eee.js";
+    js15 = ["pages/post/_postId_.svelte-508a5eee.js", "chunks/index-4ac803cb.js"];
+    css22 = [];
   }
 });
 
@@ -1320,7 +1672,7 @@ var require_dist = __commonJS({
 });
 
 // .svelte-kit/output/server/index.js
-init_index_7f83503c();
+init_index_251281f1();
 var __accessCheck = (obj, member, msg) => {
   if (!member.has(obj))
     throw TypeError("Cannot " + msg);
@@ -1355,6 +1707,7 @@ var Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let { props_0 = null } = $$props;
   let { props_1 = null } = $$props;
   let { props_2 = null } = $$props;
+  let { props_3 = null } = $$props;
   setContext("__svelte__", stores);
   afterUpdate(stores.page.notify);
   if ($$props.stores === void 0 && $$bindings.stores && stores !== void 0)
@@ -1369,6 +1722,8 @@ var Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     $$bindings.props_1(props_1);
   if ($$props.props_2 === void 0 && $$bindings.props_2 && props_2 !== void 0)
     $$bindings.props_2(props_2);
+  if ($$props.props_3 === void 0 && $$bindings.props_3 && props_3 !== void 0)
+    $$bindings.props_3(props_3);
   {
     stores.page.set(page);
   }
@@ -1379,7 +1734,11 @@ ${components[1] ? `${validate_component(components[0] || missing_component, "sve
     default: () => {
       return `${components[2] ? `${validate_component(components[1] || missing_component, "svelte:component").$$render($$result, Object.assign(props_1 || {}), {}, {
         default: () => {
-          return `${validate_component(components[2] || missing_component, "svelte:component").$$render($$result, Object.assign(props_2 || {}), {}, {})}`;
+          return `${components[3] ? `${validate_component(components[2] || missing_component, "svelte:component").$$render($$result, Object.assign(props_2 || {}), {}, {
+            default: () => {
+              return `${validate_component(components[3] || missing_component, "svelte:component").$$render($$result, Object.assign(props_3 || {}), {}, {})}`;
+            }
+          })}` : `${validate_component(components[2] || missing_component, "svelte:component").$$render($$result, Object.assign(props_2 || {}), {}, {})}`}`;
         }
       })}` : `${validate_component(components[1] || missing_component, "svelte:component").$$render($$result, Object.assign(props_1 || {}), {}, {})}`}`;
     }
@@ -1585,12 +1944,12 @@ function devalue(value) {
   }
   walk(value);
   var names = /* @__PURE__ */ new Map();
-  Array.from(counts).filter(function(entry10) {
-    return entry10[1] > 1;
+  Array.from(counts).filter(function(entry16) {
+    return entry16[1] > 1;
   }).sort(function(a, b) {
     return b[1] - a[1];
-  }).forEach(function(entry10, i) {
-    names.set(entry10[0], getName(i));
+  }).forEach(function(entry16, i) {
+    names.set(entry16[0], getName(i));
   });
   function stringify(thing) {
     if (names.has(thing)) {
@@ -3652,7 +4011,7 @@ var manifest = {
   assets: /* @__PURE__ */ new Set(["computer.svg", "equals.svg", "favicon.png", "handpapersolid.svg", "handrocksolid.svg", "handscissorssolid.svg", "medal.svg"]),
   mimeTypes: { ".svg": "image/svg+xml", ".png": "image/png" },
   _: {
-    entry: { "file": "start-96cc5e24.js", "js": ["start-96cc5e24.js", "chunks/index-826e8f7e.js", "chunks/index-5ffdce35.js"], "css": [] },
+    entry: { "file": "start-e8c05ac8.js", "js": ["start-e8c05ac8.js", "chunks/index-4ac803cb.js", "chunks/index-051037f6.js"], "css": [] },
     nodes: [
       () => Promise.resolve().then(() => (init__(), __exports)),
       () => Promise.resolve().then(() => (init__2(), __exports2)),
@@ -3662,7 +4021,13 @@ var manifest = {
       () => Promise.resolve().then(() => (init__6(), __exports6)),
       () => Promise.resolve().then(() => (init__7(), __exports7)),
       () => Promise.resolve().then(() => (init__8(), __exports8)),
-      () => Promise.resolve().then(() => (init__9(), __exports9))
+      () => Promise.resolve().then(() => (init__9(), __exports9)),
+      () => Promise.resolve().then(() => (init__10(), __exports10)),
+      () => Promise.resolve().then(() => (init__11(), __exports11)),
+      () => Promise.resolve().then(() => (init__12(), __exports12)),
+      () => Promise.resolve().then(() => (init__13(), __exports13)),
+      () => Promise.resolve().then(() => (init__14(), __exports14)),
+      () => Promise.resolve().then(() => (init__15(), __exports15))
     ],
     routes: [
       {
@@ -3689,24 +4054,24 @@ var manifest = {
       },
       {
         type: "page",
+        id: "playground@default",
+        pattern: /^\/playground\/?$/,
+        names: [],
+        types: [],
+        path: "/playground",
+        shadow: null,
+        a: [4, 5, 6],
+        b: [1]
+      },
+      {
+        type: "page",
         id: "post",
         pattern: /^\/post\/?$/,
         names: [],
         types: [],
         path: "/post",
         shadow: null,
-        a: [0, 4],
-        b: [1]
-      },
-      {
-        type: "page",
-        id: "playground/mouse-proximity",
-        pattern: /^\/playground\/mouse-proximity\/?$/,
-        names: [],
-        types: [],
-        path: "/playground/mouse-proximity",
-        shadow: null,
-        a: [0, 5],
+        a: [0, 7],
         b: [1]
       },
       {
@@ -3717,7 +4082,7 @@ var manifest = {
         types: [],
         path: "/playground/rock-paper-scissors",
         shadow: null,
-        a: [0, 6],
+        a: [4, 5, 8],
         b: [1]
       },
       {
@@ -3728,7 +4093,51 @@ var manifest = {
         types: [],
         path: "/playground/tic-tac-toe",
         shadow: null,
-        a: [0, 7],
+        a: [4, 5, 9],
+        b: [1]
+      },
+      {
+        type: "page",
+        id: "playground/mouse-proximity/intersection-observer",
+        pattern: /^\/playground\/mouse-proximity\/intersection-observer\/?$/,
+        names: [],
+        types: [],
+        path: "/playground/mouse-proximity/intersection-observer",
+        shadow: null,
+        a: [4, 5, 10],
+        b: [1]
+      },
+      {
+        type: "page",
+        id: "playground/mouse-proximity/quadrant",
+        pattern: /^\/playground\/mouse-proximity\/quadrant\/?$/,
+        names: [],
+        types: [],
+        path: "/playground/mouse-proximity/quadrant",
+        shadow: null,
+        a: [4, 5, 11],
+        b: [1]
+      },
+      {
+        type: "page",
+        id: "playground/mouse-proximity/radial",
+        pattern: /^\/playground\/mouse-proximity\/radial\/?$/,
+        names: [],
+        types: [],
+        path: "/playground/mouse-proximity/radial",
+        shadow: null,
+        a: [4, 5, 12],
+        b: [1]
+      },
+      {
+        type: "page",
+        id: "playground/scroll/perspective",
+        pattern: /^\/playground\/scroll\/perspective\/?$/,
+        names: [],
+        types: [],
+        path: "/playground/scroll/perspective",
+        shadow: null,
+        a: [4, 5, 13],
         b: [1]
       },
       {
@@ -3739,7 +4148,7 @@ var manifest = {
         types: [null],
         path: null,
         shadow: null,
-        a: [0, 8],
+        a: [0, 14],
         b: [1]
       }
     ],

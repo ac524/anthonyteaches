@@ -170,7 +170,7 @@
 
 	
 	.image {
-		max-height: 40px;
+		height: 100px!important;
 		width: auto;
 		align-items: center;
 		justify-content: center;
