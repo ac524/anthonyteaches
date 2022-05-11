@@ -41,7 +41,7 @@
 	<div class="row">
 		<div class="col box text-center message row row-ai-center text-wrap-no" id="turn-label">
 			{#if result === 'user1'}
-				<span class="row row-ai-center" in:fade aria-describedby="turn-label" class:is-win={result}>
+				<span class="row row-ai-center" in:fade aria-describedby="turn-label">
 					The winner is: Me!
 				</span>
 				<img class="image" alt="medal" src={medal} />
@@ -129,10 +129,7 @@
 		text-align: center;
 		background: #efefef;
 	}
-	.is-win {
-		background: teal;
-		color: #fff;
-	}
+
 	.game-container {
 		display: grid;
 		gap: 10px;

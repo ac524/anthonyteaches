@@ -4011,7 +4011,7 @@ var manifest = {
   assets: /* @__PURE__ */ new Set(["computer.svg", "equals.svg", "favicon.png", "handpapersolid.svg", "handrocksolid.svg", "handscissorssolid.svg", "medal.svg"]),
   mimeTypes: { ".svg": "image/svg+xml", ".png": "image/png" },
   _: {
-    entry: { "file": "start-e8c05ac8.js", "js": ["start-e8c05ac8.js", "chunks/index-4ac803cb.js", "chunks/index-051037f6.js"], "css": [] },
+    entry: { "file": "start-d5e75016.js", "js": ["start-d5e75016.js", "chunks/index-4ac803cb.js", "chunks/index-051037f6.js"], "css": [] },
     nodes: [
       () => Promise.resolve().then(() => (init__(), __exports)),
       () => Promise.resolve().then(() => (init__2(), __exports2)),
