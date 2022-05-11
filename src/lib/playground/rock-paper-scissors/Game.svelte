@@ -1,19 +1,15 @@
 <script lang="ts">
-	import Icon from 'svelte-awesome';
-	// import { handPaperO, handScissorsO, handRockO } from 'svelte-awesome/icons';
-	import {
-		faHandBackFist,
-		faHand,
-		faHandScissors,
-		faEquals,
-		faMicrochip,
-		faTrophy
-	} from '@fortawesome/free-solid-svg-icons';
-
 	import { selectWinner } from './utils/selectWinner';
 	import { fade } from 'svelte/transition';
 	import AboutRPS from './AboutRPS.svelte';
 
+	let computer = '/computer.svg';
+	let equals = '/equals.svg';
+	let paper = '/handpapersolid.svg';
+	let rock = '/handrocksolid.svg';
+	let scissors = '/handscissorssolid.svg';
+	let medal = '/medal.svg';
+	console.log(equals);
 	// Build the initial icons
 
 	let result: string = '';
@@ -44,35 +40,25 @@
 	</div>
 	<div class="row">
 		<div class="col box text-center message row row-ai-center text-wrap-no" id="turn-label">
-			{#if result}
-				<span class="buttons row" in:fade
-					>The winner is:
-					{#if result === 'user1'}
-						<span
-							aria-describedby="turn-label"
-							class="col box buttons row row-ai-center"
-							class:is-win={result}
-							style="max-width:40px;padding:10px;border-left:2px solid #FFF"
-							in:fade
-						>
-							Me!
-						</span>
-						<Icon data={faTrophy} scale="2" />
-					{:else if result === 'tie'}
-						<span class="buttons" in:fade
-							>It's a tie
-							<Icon
-								class="text-center"
-								data={faEquals}
-								scale="1"
-								spin
-								style="animation-duration: 1.5s; animation-iteration-count: 1"
-							/>
-						</span>
-					{:else}
-						<span in:fade>Computer<Icon data={faMicrochip} scale="1" /></span>
-					{/if}
+			{#if result === 'user1'}
+				<span class="row row-ai-center" in:fade aria-describedby="turn-label" class:is-win={result}>
+					The winner is: Me!
 				</span>
+				<img class="image" alt="medal" src={medal} />
+			{:else if result === 'tie'}
+				<span class="row row-ai-center" in:fade
+					>The winner is: It's a tie
+					<img
+						alt="tie"
+						class="image"
+						src={equals}
+						style="animation-duration: 1.5s; animation-iteration-count: 1"
+					/>
+				</span>
+			{:else}
+				<span class="row row-ai-center" in:fade
+					>The winner is: computer<img class="image" alt="medal" src={computer} /></span
+				>
 			{/if}
 		</div>
 	</div>
@@ -80,18 +66,18 @@
 	<!-- print icons here. -->
 	<div class="fs-larger text-center ">
 		Choose rock, paper, or scissors.
+		<hr />
 		<div class="row buttons">
-			<button class="active" value="rock" on:click={(e) => winner(options[0])}
-				><Icon data={faHandBackFist} scale="3" />
-			</button>
+			<img class="image active" alt="rock" src={rock} on:click={(e) => winner(options[0])} />
 
-			<button class="active" value="paper" on:click={(e) => winner(options[1])}
-				><Icon data={faHand} scale="3" />
-			</button>
+			<img class="image active" alt="paper" src={paper} on:click={(e) => winner(options[1])} />
 
-			<button class="active" value="scissors" on:click={(e) => winner(options[2])}>
-				<Icon data={faHandScissors} scale="3" />
-			</button>
+			<img
+				class="image active"
+				alt="scissors"
+				src={scissors}
+				on:click={(e) => winner(options[2])}
+			/>
 		</div>
 	</div>
 
@@ -105,9 +91,23 @@
 </main>
 
 <style>
+	.image {
+		max-height: 40px;
+		width: auto;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		padding: 1rem;
+		color: black;
+		z-index: 100;
+	}
+
+	.image:hover {
+	}
 	.active:hover {
-		background-color: white;
-		color: teal;
+		background-color: lightblue !important;
+		filter: saturate(75%);
+		cursor: pointer;
 	}
 	.buttons {
 		align-items: center;
