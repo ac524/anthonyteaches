@@ -8,3 +8,9 @@ declare namespace App {
 	// interface Session {}
 	// interface Stuff {}
 }
+declare namespace svelte.JSX {
+    interface HTMLProps<T> {
+      oninprox?: (e: CustomEvent) => void,
+      onoutprox?: (e: CustomEvent) => void
+    }
+}

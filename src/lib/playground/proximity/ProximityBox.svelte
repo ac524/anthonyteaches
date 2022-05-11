@@ -1,7 +1,8 @@
 <script lang=ts>
     import type { InProxDetails } from "./type";
-    import { onMount, createEventDispatcher } from "svelte";
-    import { mouseX, mouseY, scrollY } from "./stores";
+    import type { Unsubscriber } from "svelte/store";
+    import { onMount, createEventDispatcher, onDestroy } from "svelte";
+    import { scrollY, mouseCoords } from "./stores";
 
     export let radius : number = 20;
 
@@ -16,7 +17,12 @@
     let isInWindow = false;
     let ratio : number;
 
-    const dispatch = createEventDispatcher<{ inprox: InProxDetails, outprox: undefined }>();
+    const dispatch = createEventDispatcher<{
+        inprox: InProxDetails,
+        outprox: undefined,
+        enterscreen: undefined,
+        leavescreen: undefined
+    }>();
 
     const dispatchInProx = () => dispatch("inprox", {
         bounds,
@@ -29,22 +35,7 @@
         inBox
     });
 
-    onMount(() => {
-        let options = {
-            rootMargin: '20px',
-        };
-
-        // TODO Create/Share a single observer as a dependency?
-        let observer = new IntersectionObserver((entries) => {
-
-            entries.forEach(entry => isInWindow = entry.isIntersecting);
-
-        }, options);
-
-        observer.observe( box );
-    });
-
-    const determineProx = ( mouseX: number, mouseY: number ) => {
+    const determineProx = ( { x: mouseX, y: mouseY } : { x : number, y: number } ) => {
         const wasInProx = inProx;
         if( isInWindow ) {
             bounds = box.getBoundingClientRect();
@@ -108,9 +99,35 @@
         }
     }
 
-    $ : determineProx( $mouseX, $mouseY );
+    $ : determineProx( $mouseCoords);
 
-    scrollY.subscribe(() => determineProx( $mouseX, $mouseY ));
+    $ : {
+        dispatch(isInWindow ? "enterscreen" : "leavescreen");
+    }
+
+
+    let scrollYSub : Unsubscriber;
+    onMount(() => {
+        let options = {
+            rootMargin: '20px',
+        };
+
+        // TODO Create/Share a single observer as a dependency?
+        let observer = new IntersectionObserver((entries) => {
+
+            entries.forEach(entry => isInWindow = entry.isIntersecting);
+
+        }, options);
+
+        observer.observe( box );
+
+        scrollYSub = scrollY.subscribe(() => determineProx( $mouseCoords ));
+    });
+
+    onDestroy(() => {
+        scrollYSub && scrollYSub();
+    });
+    
 </script>
 
 <div bind:this={box} class:is-near-hover={inProx}>
@@ -119,6 +136,7 @@
 
 <style>
     div {
+        max-width: 100%;
         width: 50vw;
         background: rgba(0,0,0,0.2);
         padding: 2rem;

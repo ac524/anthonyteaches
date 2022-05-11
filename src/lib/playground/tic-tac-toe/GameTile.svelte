@@ -25,6 +25,7 @@
     $ : {
         if( hoverLabel && tile.value ) hoverLabel = "";
     }
+    
     $ : label = makeLabel(turn, tile);
 </script>
 
