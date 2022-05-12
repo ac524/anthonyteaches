@@ -1,38 +1,33 @@
-# create-svelte
+# Anthony Teaches
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+The Anthony Teaches Project promotes Anthony as an educator through showcasing the post graduation success of students and providing free educational material and content around needs of bootcamp students. Project development focuses on collaborator education as we work together to learn new technologies, including SvelteKit, Github Actions, and deployment over CloudFlare Workers.
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
+## Installation
 
 ```bash
-# create a new project in the current directory
-npm init svelte
-
-# create a new project in my-app
-npm init svelte my-app
+npm run i
 ```
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+To launch the project and work on it localy, run the `npm run dev` command.
 
 ```bash
 npm run dev
 
 # or start the server and open the app in a new browser tab
-npm run dev -- --open
+npm run dev:open
+
+# or start the server and expose it to the network
+npm run dev:host
 ```
 
-## Building
+## Recommended VS Code Extensions
 
-To create a production version of your app:
+[ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) - ESLint support for VS Code
 
-```bash
-npm run build
-```
+[Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) - Prettier formatter support for VS Code
 
-You can preview the production build with `npm run preview`.
+[Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) - Svelte language support for VS Code
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+[sveltekit-snippets](https://marketplace.visualstudio.com/items?itemName=stordahl.sveltekit-snippets) - Helpful code snippets for common Svelte code blocks
