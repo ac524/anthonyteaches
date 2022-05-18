@@ -1,6 +1,6 @@
 # A Guide to Setting Up Your LinkedIn Profile
 
-Inspired off a question  in Slack about sprucing up up LinkedIn profile after I shared a podcast episode from [CodeNewbie, What you need to be prepared for any job interview](https://www.codenewbie.org/podcast/what-you-need-to-be-prepared-for-any-job-interview).
+This article was inspired off a question from a student in Slack about sprucing up their LinkedIn profile. The student's question was prompted after I shared a podcast episode from [CodeNewbie, What you need to be prepared for any job interview](https://www.codenewbie.org/podcast/what-you-need-to-be-prepared-for-any-job-interview), so if you're looking for motivation on why your LinkedIn profile is important, start by listening to that episode!
 
 ## Content Providers on Social
 
