@@ -12,7 +12,7 @@
 	console.log(equals);
 	// Build the initial icons
 
-	let result: string = '';
+	let result: string | null  = '';
 	let choice: string = '';
 	let computerChoice: string = '';
 
@@ -134,38 +134,6 @@
 		display: grid;
 		gap: 10px;
 	}
-
-	.game-box {
-		width: 300px;
-		max-width: 100%;
-		background: #dedede;
-	}
-
-	.game-box--inner {
-		min-width: 100%;
-		position: relative;
-	}
-
-	.game-grid {
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		top: 0;
-		left: 0;
-		display: grid;
-		grid-template-columns: 1fr 1fr 1fr;
-		grid-template-rows: 1fr 1fr 1fr;
-		border: 1px solid #000;
-	}
-
-	button {
-		padding: 0.5rem 1rem;
-	}
-	button:hover {
-		cursor: pointer;
-	}
-
-	
 	.image {
 		height: 100px!important;
 		width: auto;

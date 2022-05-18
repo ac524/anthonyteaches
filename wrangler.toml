@@ -1,32 +1,23 @@
-name = "rock-paper-scissors"
-type = "javascript"
-route = ''
-zone_id = ''
+name = "anthony-teaches-app"
+account_id = 'd83907a40e89c35237681b6f2371e490'
+zone_id = 'f3dfb6317ab30d364f16d02fc0e1bccb'
+
+
 usage_model = ''
 compatibility_flags = []
 workers_dev = true
-site = {bucket = "./build", entry-point = "./dist"}
-compatibility_date = "2022-05-04"
+compatibility_date = "2022-04-28"
 
-account_id = '74829c5b0d7ab48291e8419849c18b8a'
-# zone_id    = '{MY_CLOUDFLARE_ZONE_ID}' # optional, if you don't specify this a workers.dev subdomain will be used.
-
-# I tried "webpack", but kept getting errors on deploy. Seemed to be failing on modern syntax in the file such as `??` and `?.`.
-# type = "javascript"
-# Publishes to the `workers.dev` site. Need a `routes` config for zone deployment.
-# workers_dev = true
-# Publishes to the `workers.dev` site. Need a `routes` config for zone deployment.
-# compatibility_date = "2022-04-28"
+type = "javascript"
 
 [build]
-# Assume it's already been built. You can make this "npm run build" to ensure a build before publishing. We opted to keep the "npm run build" out of this process.
+# Assume it's already been built. You can make this "npm run build" to ensure a build before publishing
 command = ""
 
 [build.upload]
 format = "modules"
 main = "./worker.mjs"
 
-# [site]
-# bucket = "./build"
-# Other guides had this as "./workers-sites", but the deploy seemed to be forcing a lookup for a "./dist" folder for me. Updating the option to match enabled a successful deploy.
-# entry-point = "./dist"
+[site]
+bucket = "./build"
+entry-point = "./dist"

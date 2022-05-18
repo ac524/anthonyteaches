@@ -1,6 +1,5 @@
 <script>
 	import Modal from './Modal.svelte';
-	import Icon from 'svelte-awesome';
 	let paper = '/handpapersolid.svg';
 	let rock = '/handrocksolid.svg';
 	let scissors = '/handscissorssolid.svg';

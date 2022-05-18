@@ -1,12 +1,12 @@
-<script>
+<script lang=ts>
 	import { createEventDispatcher, onDestroy } from 'svelte';
 
 	const dispatch = createEventDispatcher();
 	const close = () => dispatch('close');
 
-	let modal;
+	let modal: any;
 
-	const handle_keydown = e => {
+	const handle_keydown = (e: any) => {
 		if (e.key === 'Escape') {
 			close();
 			return;
@@ -15,7 +15,7 @@
 		if (e.key === 'Tab') {
 			// trap focus
 			const nodes = modal.querySelectorAll('*');
-			const tabbable = Array.from(nodes).filter(n => n.tabIndex >= 0);
+			const tabbable: any = Array.from(nodes).filter((n: any) => n.tabIndex >= 0);
 
 			let index = tabbable.indexOf(document.activeElement);
 			if (index === -1 && e.shiftKey) index = 0;
@@ -32,20 +32,21 @@
 
 	if (previously_focused) {
 		onDestroy(() => {
+			// @ts-ignore
 			previously_focused.focus();
 		});
 	}
 </script>
 
-<svelte:window on:keydown={handle_keydown}/>
+<svelte:window on:keydown={handle_keydown} />
 
-<div class="modal-background" on:click={close}></div>
+<div class="modal-background" on:click={close} />
 
 <div class="modal" role="dialog" aria-modal="true" bind:this={modal}>
-	<slot name="header"></slot>
-	<hr>
-	<slot></slot>
-	<hr>
+	<slot name="header" />
+	<hr />
+	<slot />
+	<hr />
 
 	<!-- svelte-ignore a11y-autofocus -->
 	<button autofocus on:click={close}>close modal</button>
@@ -58,11 +59,11 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background: rgba(0,0,0,0.3);
+		background: rgba(0, 0, 0, 0.3);
 	}
 
 	.modal {
-		z-index:100;
+		z-index: 100;
 		position: absolute;
 		left: 50%;
 		top: 50%;
@@ -70,7 +71,7 @@
 		max-width: 32em;
 		max-height: calc(100vh - 4em);
 		overflow: auto;
-		transform: translate(-50%,-50%);
+		transform: translate(-50%, -50%);
 		padding: 1em;
 		border-radius: 0.2em;
 		background: white;
