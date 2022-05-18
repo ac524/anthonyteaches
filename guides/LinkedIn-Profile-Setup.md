@@ -4,7 +4,7 @@ This article was inspired off a question from a student in Slack about sprucing 
 
 ## Content Providers on Social
 
-Content providers and mentors on the subject matter your can follow!
+Content providers and mentors on the subject matter you can follow!
 
 **LinkedIn**
 
