@@ -2,13 +2,24 @@
 
 Like MongoDB stores collections and documents, KV stores data as a key and a value in an object. You can call on a key to get/update/delete it's value. The value can be anything! People like Key/Value storage because it's lightening fast and can be integrated into other SQL and NoSQL/Relational databases.
 
-Cloudflare stores the KV datasets in their data centers all over the world! 
-* Step functions - sync state data between multiple APIs functions.
-* Edge file store - host large amounts of small files.
+Cloudflare stores the KV datasets in their data centers all over the world!
+
+- Step functions - sync state data between multiple APIs functions.
+- Edge file store - host large amounts of small files.
 
 https://developers.cloudflare.com/workers/learning/how-kv-works/
 
-# Methods - PUT/GET/DELETE/LIST
+## Adding KV stores to your namespace
+
+You can create a namespace using Wrangler or in the Cloudflare dashboard. You can also bind the namespace to your Worker in the dashboard:
+
+Go to Workers.
+Select your Worker.
+Select Settings > Variables.
+Go to KV Namespace Bindings.
+Select Add binding.
+
+## Methods - PUT/GET/DELETE/LIST
 
 ## PUT
 
