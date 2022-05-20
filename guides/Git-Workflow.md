@@ -4,14 +4,14 @@ This document outlines the recommended workflow for working through a task in th
 
 ## Workflow Steps
 
-1. **[Create/Checkout a Branch](#createcheckout-a-branch)**
-2. **[Open or Review Draft PR](#open-or-review-draft-pr)**
-3. **[Complete the Tasks](#complete-the-tasks)**
-4. **[Publish PR and Request Reviewers](#publish-pr-and-request-reviewers)**
-5. **[Complete Code Review](#complete-code-review)**
-6. **[Accept and Merge your PR](#accept-and-merge-your-pr)**
+1. **[Create/Checkout a Branch](#createcheckout-a-branch)** - `git checkout -b task-type/name-of-objective`
+2. **[Open or Review Draft PR](#open-or-review-draft-pr)** - Done on GitHub
+3. **[Complete the Tasks](#complete-the-tasks)** - Add: `git add .` | Commit: `git commit -m "My message"` | Push: `git push`
+4. **[Publish PR and Request Reviewers](#publish-pr-and-request-reviewers)** - Done on GitHub
+5. **[Complete Code Review](#complete-code-review)** - Done on GitHub
+6. **[Accept and Merge your PR](#accept-and-merge-your-pr)** - Done no GitHub
 7. (Pending completion CD Pipeline) Track and confirm deployment
-8. **[Delete Working Branch](#delete-working-branch)**
+8. **[Delete Working Branch](#delete-working-branch)** - Done on GitHub and Local: `git branch -d name-of-branch-to-delete`
 9. **Start back at Step 1!**
 
 
