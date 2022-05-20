@@ -18,12 +18,51 @@ This document outlines the recommended workflow for working through a task in th
 
 ## Create/Checkout a Branch
 
-Assign yourself to the issue if begining work on an open task.
+```bash
+git checkout -b task-type/name-of-objective
+```
 
-Create a new branch off `main` or checkout out the existing branch if jumping in on existing work.
+The first step to any work in a collaborative project is to create a unique [branch](https://www.atlassian.com/git/tutorials/using-branches) for the work that you want to complete.
 
-Choose a name that is fairly specific to your issue. Avoid names such as 'Anthony's Branch'. You can add a flag in the front to help specify your issue, such as 'bug/login-issue'. Generally branch names use kebab-case, all lowercase with a - and a '/' for the initial flag, as in the example above.
-Don't forget to update the project or kanban board with the status of the issue (i.e. in-progress)
+**Before creating your branch** there are few important steps to make sure you are ready to create a branch new branch.
+
+*First*, ensure you are current on the main branch. The best way to do this is with a quick `git branch` command. This will list all your local branches, with your *current branch* highlighted in green.
+
+![Example git branch command showing a list of branches with one highlighted in green with and arrow pointing to it with the text Current branch indicated in green](./assets/git-workflow/git-branch-example.jpg)
+
+If you aren't currently on `main`, then use the `checkout` command to move yourself to the `main` branch.
+
+```bash
+git checkout main
+```
+
+*Second*, make sure you have the most up to date code with the `pull` command!
+
+```bash
+git pull
+```
+
+**🙌 Now you're ready to make a new branch!**
+
+> 📘 Naming your Branch
+> 
+> A branch name should always be based on the task your are trying to complete. Avoid names like `anthony-work` and instead pick a name based on what you want to complete, such as `homepage-html`.
+
+### Branch Pathing / Task Type Indication
+
+In addition to a branch name, you can help indicate the scope of your task, by prefixing the branch name with one of the task types below with a `/` seperator.
+
+The example below takes the `homepage-html` branch and places it under the `mockup` task type to indicate it's task for review and testing.
+```
+git checkout -b mockup/homepage-html
+```
+
+**Task Types**
+
+- `feature` - A task that adds to the project
+- `patch` - A task that updates existing code in the project
+- `mockup` - A task aimed at design or experimention instead of direct integration
+- `docs` - A task to work on markdown guides and content
 
 ## Open or Review Draft PR
 
@@ -36,8 +75,9 @@ Pro-tip:Include the '#' with the issue number in your main issue comment. (i.e R
 ## Complete the Tasks
 
 Keep your branch within the scope of the outlined tasks. If you try to take on too many things it can interfere with issues/other branches already in progress. You can always add a new issue and separate branch if you'd like to do discover additional tasks related to your current issue.
-<br>
-If you cannot complete your issue, you can flag your draft PR with a 'help wanted' label inside GitHub. <br>
+
+If you cannot complete your issue, you can flag your draft PR with a 'help wanted' label inside GitHub.
+
 Embed brief video or include screenshots/code detailing out where you are stuck/highlighting the problem to help other developers help you better. You can tag other github collaborators inside of the initial comment by including an _@username_ inside the comment. (Provides the user with a notification inside Github, including the link to the draftPR)
 
 ## Publish PR and Request Reviewers
