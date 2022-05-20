@@ -24,9 +24,9 @@ git checkout -b task-type/name-of-objective
 
 The first step to any work in a collaborative project is to create a unique [branch](https://www.atlassian.com/git/tutorials/using-branches) for the work that you want to complete.
 
-**Before creating your branch** there are few important steps to make sure you are ready to create a branch new branch.
+**Before creating your branch** there are few important steps to make sure you are ready to create a new branch.
 
-*First*, ensure you are current on the main branch. The best way to do this is with a quick `git branch` command. This will list all your local branches, with your *current branch* highlighted in green.
+*First*, ensure you are currently on the main branch. The best way to do this is with a quick `git branch` command. This will list all your local branches, with your *current branch* highlighted in green.
 
 ![Example git branch command showing a list of branches with one highlighted in green with and arrow pointing to it with the text Current branch indicated in green](./assets/git-workflow/git-branch-example.jpg)
 
@@ -50,9 +50,9 @@ git pull
 
 ### Branch Pathing / Task Type Indication
 
-In addition to a branch name, you can help indicate the scope of your task, by prefixing the branch name with one of the task types below with a `/` seperator.
+In addition to a branch name, you can help indicate the scope of your task, by prefixing the branch name with one of the task types below, using a `/` as a seperator.
 
-The example below takes the `homepage-html` branch and places it under the `mockup` task type to indicate it's task for review and testing.
+The example below takes the `homepage-html` branch and places it under the `mockup` task type to indicate it's task for design instead of direct integration.
 ```
 git checkout -b mockup/homepage-html
 ```
@@ -61,7 +61,7 @@ git checkout -b mockup/homepage-html
 
 - `feature` - A task that adds to the project
 - `patch` - A task that updates existing code in the project
-- `mockup` - A task aimed at design or experimention instead of direct integration
+- `mockup` - A task aimed at design or experimention instead of direct integration. A `mockup` branch wont directly merge into `main`, but may be converted into a `feature` or `patch` later on to indicate it's project ready.
 - `docs` - A task to work on markdown guides and content
 
 ## Open or Review Draft PR
