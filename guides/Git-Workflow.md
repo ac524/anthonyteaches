@@ -11,7 +11,7 @@ This document outlines the recommended workflow for working through a task in th
 5. **[Complete Code Review](#complete-code-review)**
 6. **[Accept and Merge your PR](#accept-and-merge-your-pr)**
 7. (Pending completion CD Pipeline) Track and confirm deployment
-8. **[Housekeeping](#housekeeping)**
+8. **[Delete Working Branch](#delete-working-branch)**
 9. **Start back at Step 1!**
 
 
@@ -53,7 +53,7 @@ Review the edits/feedback to your branch and try to make the updates as quickly 
 ## Accept and Merge your PR
 
 Detail process / Provide images and code for demonstration
-## Housekeeping
+## Delete Working Branch
 
 It seems tedious and unimportant, but it only takes a minute! Please help other collaborators keep a tidy workspace by deleting your branch on github and locally after deployment. Deleted branches can be restored, if need be, but keeping unused branches makes things cluttered for the team. When looking at branches and pulling them down, it's important we are all working with the most up to date list. Having 30 stale branches sitting in the list of branches makes it confusing for new and existing collaborators to work with.
 
