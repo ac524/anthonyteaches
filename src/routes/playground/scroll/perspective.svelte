@@ -13,7 +13,6 @@
         const observer = observe && new IntersectionObserver((entries) => {
             entries.forEach(
                 ({isIntersecting}) => {
-                    console.log(isIntersecting, scrollBoxEffectSubs);
                     scrollBoxEffectSubs.forEach(sub => sub.dispatchEvent(new CustomEvent(`seffect${isIntersecting ? "on" : "off"}`)));
                 }
             )
