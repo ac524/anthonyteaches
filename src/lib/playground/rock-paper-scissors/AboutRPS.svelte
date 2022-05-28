@@ -17,11 +17,6 @@
 		<h2 slot="header">
 			Choose rock, paper, or scissors. <br /> Your opponent also chooses from the same 3 options.
 		</h2>
-		<div class="icons">
-			<!-- <Icon data={handPaperO} scale={5} />
-			<Icon data={handScissorsO} />
-			<Icon data={handRockO} /> -->
-		</div>
 		<ol class="definition-list">
 			<h3>How do I win?</h3>
 

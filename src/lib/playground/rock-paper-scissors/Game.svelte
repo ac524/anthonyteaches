@@ -9,7 +9,7 @@
 	let rock = '/handrocksolid.svg';
 	let scissors = '/handscissorssolid.svg';
 	let medal = '/medal.svg';
-	console.log(equals);
+
 	// Build the initial icons
 
 	let result: string | null  = '';
