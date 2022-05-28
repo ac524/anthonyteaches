@@ -19,4 +19,10 @@ When a client interacts with a server, requests funnel directly to that server. 
 Cloudflare - https://www.cloudflare.com/
 Service Worker API - https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API 
 Cloudflare Workers Playground - https://cloudflareworkers.com/#12a9195720fe4ed660949efdbd9c0219:https://tutorial.cloudflareworkers.com 
-Serverless (IBM) - https://www.ibm.com/cloud/learn/serverless 
+Serverless (IBM) - https://www.ibm.com/cloud/learn/serverless
+
+## Additional Resources
+
+Podcast: [WTF is the Edge? Edge Compute / Functions](https://syntax.fm/show/454/wtf-is-the-edge-edge-compute-functions) by Syntax
+Podcast: [What Cloudflare is up to](https://changelog.com/jsparty/209) by The JS Party Podcast
+Video: [Here is what Cloudflare Workers do](https://youtu.be/48NWaLkDcME) by Wes Bos
