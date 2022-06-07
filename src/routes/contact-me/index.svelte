@@ -1,16 +1,7 @@
-<script lang=js>
-/**
- * rawHtmlResponse returns HTML inputted directly
- * into the worker script
- * @param {string} html
- */
-function rawHtmlResponse(html) {
-  const init = {
-    headers: {
-      'content-type': 'text/html;charset=UTF-8',
-    },
-  };
-  return new Response(html, init);
+<script lang ts>
+// what can we import here to use the CONTACT variable?
+import CONTACT from 'wrangler.toml'
+declare global CONTACT: kv-name
   /**
  * readRequestBody reads in the incoming request body
  * Use await readRequestBody(..) in an async function to get the string
@@ -39,12 +30,19 @@ async function readRequestBody(request) {
     return 'a file';
   }
 }
-} 
 
 async function handleRequest(request) {
-  const reqBody = await readRequestBody(request);
-  const retBody = `The request body sent in was ${reqBody}`;
-  return new Response(retBody);
+  const defaultData = { 
+    todos: [
+      {
+        id: 1,
+        name: 'Finish the Cloudflare Workers blog post',
+          completed: false
+      }
+    ] 
+  }
+  CONTACT.put("data", JSON.stringify(defaultData))
+  
 }
 
 addEventListener('fetch', event => {
@@ -64,21 +62,20 @@ addEventListener('fetch', event => {
 
 <h1>Hello Friend!</h1>
 <p>This is all generated using a Worker</p>
-<form action="/demos/requests" method="post">
-  <div>
-    <label for="say">What do you want to say?</label>
-    <input name="say" id="say" value="Hi">
-  </div>
-  <div>
-    <label for="to">To who?</label>
-    <input name="to" id="to" value="Mom">
-  </div>
-  <div>
-    <button>Send my greetings</button>
-  </div>
+<form action="/contact-me" method="post">
+	<div>
+		<label for="say">What do you want to say?</label>
+		<input name="say" id="say" type="text" />
+	</div>
+	<div>
+		<label for="name">From who?</label>
+
+		<input name="from" id="from" type="text" />
+	</div>
+	<div>
+		<button>Send my greetings</button>
+	</div>
 </form>
 
 <style>
-
-
 </style>

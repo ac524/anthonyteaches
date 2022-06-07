@@ -1,7 +1,6 @@
 name = "anthony-teaches-app"
-account_id = 'd83907a40e89c35237681b6f2371e490'
+account_id = '74829c5b0d7ab48291e8419849c18b8a'
 zone_id = 'f3dfb6317ab30d364f16d02fc0e1bccb'
-
 
 usage_model = ''
 compatibility_flags = []
@@ -9,6 +8,12 @@ workers_dev = true
 compatibility_date = "2022-04-28"
 
 type = "javascript"
+
+
+kv_namespaces = [
+         { binding = "CONTACT", id = "a969f880c14043a2b5653c8a5c51243d" },
+         { binding = "CONTACTS", id = "235f7ed9f6004a17afef85190a931dd4" }  
+]
 
 [build]
 # Assume it's already been built. You can make this "npm run build" to ensure a build before publishing
