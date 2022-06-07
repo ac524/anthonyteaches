@@ -15,10 +15,6 @@ Once our app is built and published with Cloudflare workers ([see cloudflare das
    ![KV Binding in CloudFlare Settings](./assets/KV-Settings-Variables-ENV-Binding.PNG)
    Notice the route listed up at the top is our deployed url which is a different name than our KV namespace. The binding '\_\_STATIC_CONTENT' is now a global variable we can access in this route/namespace.
 
-# Multiple KV stores/namespaces
-
-As we navigate dynamic data from users being added to our site, we might find we need to add or edit namespaces and bindings. We may have a 'FILES' namespace with it's unique binding, and a generic namespace with it's unique binding. We can have multiple namespaces pointing to the same worker/deployed route.
-
 # Using the Wrangler CLI
 
 In the example here, the namespace and binding were automatically created upon deployment. But what if we wanted to add a namespace forthe guide files in our project and displaying them to the page? We can perform many actions with our namespaces and bindings in the Wrangler CLI (terminal). Below are the common commands we'll be using to do so, along with examples.
@@ -26,7 +22,14 @@ In the example here, the namespace and binding were automatically created upon d
 ## Create a new namespace (KV store) in terminal
 
 ```
-wrangler kv:namespace create "FILES"
+<!-- To create a namespace you have to be logged in to your account and your account id has to be listed in the top of the wrangler.toml file.
+
+Your account id is located under the Workers tab in your cloudflare account. Now you can run the following commands. -->
+
+wrangler login
+
+<!-- should open in browser window, do you grant access? If success message, continue on to next step to create a namespace. -->
+wrangler  kv:namespace create "FILES"
 
 🌀  Creating namespace with title "__kv-binding-FILES'"
 ✨  Success!
@@ -79,7 +82,8 @@ _Source: [Cloudflare Wrangler-Commands](https://developers.cloudflare.com/worker
 
 # KV Javascript CRUD actions
 
-Using asyc/await<br>
+Once your namespace is created you should be able to use it in a workers script to perform CRUD actions. These use async/await and the global variable you created above.
+<br>The binding created above ("FILES") is now our global variable. How to access it doesn't seem so straightforward when using sveltekit. We do have the adapter installed and the kv-asset-handler but I'm unable to successfully utilize the methods below to get/put/delete anything with my kv namespace/binding.
 
 **Create**
 
