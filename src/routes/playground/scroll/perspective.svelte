@@ -51,7 +51,10 @@
 
         el.addEventListener("setoffset", setOffsetHandler );
 
-        const subscribe = () => y.subscribe(scrollY => el.style.transform = effect(scrollY - offset));
+        const subscribe = () => y.subscribe(scrollY => {
+            console.log(scrollY);
+            el.style.transform = effect(scrollY - offset)
+        });
 
         let unsub : Unsubscriber|null = subscribe();
 
