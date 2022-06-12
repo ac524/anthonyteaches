@@ -5,7 +5,7 @@ export async function get({ platform }: RequestEvent) {
 
     const count = parseInt(result) + 1;
 
-    await platform.env.FILES.put("count", count);
+    await platform.env.FILES.put("count", count.toString() );
 
 	return {
 		body: {
