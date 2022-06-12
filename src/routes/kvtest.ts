@@ -1,8 +1,6 @@
 import type { RequestEvent } from '@sveltejs/kit/types/private';
 
-export async function get({ params, platform }: RequestEvent) {
-	// `params.id` comes from [id].js
-
+export async function get({ platform }: RequestEvent) {
     const result = (await platform.env.FILES.get("count")) || 0;
 
     const count = parseInt(result) + 1;

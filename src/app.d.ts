@@ -4,7 +4,10 @@
 // for information about these interfaces
 declare namespace App {
 	// interface Locals {}
-	// interface Platform {}
+	interface Platform {
+    env, // TODO Describe with available KV namespaces
+    context
+  }
 	// interface Session {}
 	// interface Stuff {}
 }
