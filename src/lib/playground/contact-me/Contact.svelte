@@ -1,7 +1,7 @@
 <script lang="ts">
 	// Starting template: https://gist.github.com/danawoodman/1aba56c63e2c268ae840b4a9d66f869a
 	import Field from './Field.svelte';
-	import put from '../../../routes/playground/contact-me.svelte';
+	import put from '../../../routes/playground/contact/contact-me';
 	import { blur } from 'svelte/transition';
 
 	let name = '';

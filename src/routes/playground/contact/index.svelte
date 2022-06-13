@@ -1,20 +1,6 @@
 <script lang="ts">
 	import Contact from '$lib/playground/contact-me/Contact.svelte';
-
-	import type { RequestEvent } from '@sveltejs/kit/types/private';
-
-	export async function get({ platform }: RequestEvent) {
-		const result = (await platform.env.CONTACTS.get('data')) || '';
-		console.log(result);
-		return result;
-	}
-
-	export async function put({ platform }: RequestEvent) {
-		const updates = await platform.env.CONTACTS.put('data', { data });
-		console.log(updates);
-
-		return { body: { success: true } };
-	}
+	export let errors: any;
 </script>
 
 <svelte:head>
@@ -24,6 +10,9 @@
 
 <div class="window">
 	<Contact />
+	{#if errors?.title}
+		<p class="error">{errors.title}</p>
+	{/if}
 </div>
 
 <style>
