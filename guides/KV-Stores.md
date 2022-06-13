@@ -20,17 +20,12 @@ Once our app is built and published with Cloudflare workers ([see cloudflare das
 1. **Live route/deployed url**<br> The KV Worker (**function deployment service**) is used here in a serverless environment.
 
 2. **KV Namespace + Unique ID** <br>The KV store is called a KV namespace by Cloudflare. It is a collection of key-value pairs where all the keys have to be unique. i.e. a database. Each namespace also is assigned its own unique id.
-   These are replicated to Cloudflare's edge for efficient retrieval when someone visits our site.<br> <br> The namespace '\_kv-binding-workers_sites_assets' is based on the name I put in my wrangler.toml file.<br>
-   [name = "kv-binding", click for PNG](..%5Cwrangler.toml)<br><br>The files from our build are broken down into 'keys' and 'values'. Here is a partial list of keys/values for the published namespace, *\_\_kv-binding-workers*sites_assets\*. You can see the manifest is one key name and the value is the entire manifest.json![Key-Value Store of Static Site](./assets/KVStore-manifest-example.PNG)
 
 3. **KV Binding** <br> This bridges our actual worker with our Namespace. This allows the worker to read data from our KV namespace (i.e. database holding our site files).<br><br>
-   A default binding was automatically created for us upon the wrangler publish command. It looks like this in the dashboard:
-   ![KV Binding in CloudFlare Settings](./assets/KV-Settings-Variables-ENV-Binding.PNG)
-   Notice the route listed up at the top is our deployed url which is a different name than our KV namespace. The binding '\_\_STATIC_CONTENT' is now a global variable we can access in this route/namespace.
 
 # Using the Wrangler CLI
 
-In the example here, the namespace and binding were automatically created upon deployment. But what if we wanted to add a namespace forthe guide files in our project and displaying them to the page? We can perform many actions with our namespaces and bindings in the Wrangler CLI (terminal). Below are the common commands we'll be using to do so, along with examples.
+In the current project, our worker has already created a namespace and binding upon deployment. But what if we wanted to add a namespace for specific pages/endpoints in our app? We'll want to create a new namespace, specific to our goal. We can perform many actions with our namespaces and bindings in the Wrangler CLI (terminal). Below is how to do that, along with common CLI commands.
 
 # Create Namespace
 
@@ -48,7 +43,7 @@ wrangler  kv:namespace create "FILES"
 
 🌀  Creating namespace with title "__kv-binding-FILES'"
 ✨  Success!
-Add the following to your toml configuration file:
+// Add the following to your toml configuration file:
 kv_namespaces = [
   { binding = "kv-binding-FILES", id = "c3f09adsdsdfdfw1b4740a7f63" }
 ]
