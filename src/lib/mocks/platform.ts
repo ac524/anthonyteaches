@@ -15,7 +15,8 @@ const createKVMock = (defaultData : [string, string][] = []) => {
 export const createPlatformMock = () => {
     !mockPlatform && (mockPlatform = {
         env: {
-            FILES: createKVMock()
+            FILES: createKVMock(),
+            CONTACTS: createKVMock()
         },
         context: {}
     });

@@ -1,5 +1,20 @@
 <script lang="ts">
-	import ContactMe from '$lib/playground/contact-me/Contact.svelte';
+	import Contact from '$lib/playground/contact-me/Contact.svelte';
+
+	import type { RequestEvent } from '@sveltejs/kit/types/private';
+
+	export async function get({ platform }: RequestEvent) {
+		const result = (await platform.env.CONTACTS.get('data')) || '';
+		console.log(result);
+		return result;
+	}
+
+	export async function put({ platform }: RequestEvent) {
+		const updates = await platform.env.CONTACTS.put('data', { data });
+		console.log(updates);
+
+		return { body: { success: true } };
+	}
 </script>
 
 <svelte:head>
@@ -8,7 +23,7 @@
 </svelte:head>
 
 <div class="window">
-	<ContactMe />
+	<Contact />
 </div>
 
 <style>

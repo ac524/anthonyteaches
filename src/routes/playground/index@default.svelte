@@ -1,4 +1,4 @@
-<script lang=ts>
+<script lang="ts">
 </script>
 
 <h1>Playgrounds</h1>
@@ -6,7 +6,7 @@
 Playgrounds and expirimentations built by contributors while learning Svelte.
 <h2>Contact Page</h2>
 <ul>
-	<li><a href="/playground/contact-me">Tic Tac Toe</a></li>
+	<li><a href="/playground/contact-me">Contact me</a></li>
 </ul>
 
 <h2>Games</h2>
