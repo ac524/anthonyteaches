@@ -6,13 +6,13 @@ Table of Contents
 
 - [Basics](#basics)
 - [Using the Wrangler CLI](#using-the-wrangler-cli)
-- [Create Namespace](#create-namespace)
-- [View Namespaces](#view-namespaces)
-- [Accessing keys, values in CLI](#accessing-keys-values-in-cli)
+   - [Create Namespace](#create-namespace)
+   - [View Namespaces](#view-namespaces)
+   - [Accessing keys, values in CLI](#accessing-keys-values-in-cli)
 - [App namespace, binding set up](#app-namespace-binding-set-up)  
-  ** [Hooks](##hooks)  
-  ** [App.d.ts](##app.d.ts)  
-  \*\* [`RequestEvent` Method](##requestevent-method)
+  - [Hooks](#hooks)  
+  - [App.d.ts](#appdts)  
+  - [Example with `RequestEvent` method](#example-with-requestevent-method)
 - [Key-Value JS, TS CRUD actions](#key-value-js-ts-crud-actions)
 
 # Basics
@@ -56,7 +56,7 @@ kv_namespaces = [
 ]
 ```
 
-# View namespaces
+# View Namespaces
 
 View the namespaces and bindings associated with each namespace. The binding is last part of the 'title', and it's now a we'll access and use inside our project to get, put, and delete kv's dynamically.
 
@@ -141,7 +141,7 @@ declare namespace App {
   }
 ```
 
-## `RequestEvent` method
+## Example with `RequestEvent` method
 
 There's one last thing we'll need in order access and modify our namespace dynamically, and it's the `{ RequestEvent }` method. Let's create a test file to see the usage with our created namespace and binding. The namespace/binding used in this example is `FILES`.
 
