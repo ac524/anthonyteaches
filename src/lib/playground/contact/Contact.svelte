@@ -1,8 +1,10 @@
 <script lang="ts">
 	// Starting template: https://gist.github.com/danawoodman/1aba56c63e2c268ae840b4a9d66f869a
 	import Field from './Field.svelte';
-	import put from '../../../routes/playground/contact/contact-me';
+	import { put, get } from '../../../routes/playground/contact/contact-me';
 	import { blur } from 'svelte/transition';
+	import { append } from 'svelte/internal';
+	// import type { RequestEvent } from '@sveltejs/kit/types/private';
 
 	let name = '';
 	let linkedIn = '';
@@ -12,18 +14,30 @@
 	let githubValid: boolean = false;
 	let submitting: boolean = false;
 	let valid = false;
-	var data: Object = {};
+
 	// $: makes the field reactive! :)
+
 	$: {
 		valid = nameValid && linkedInIsValid && githubValid;
 	}
+
 	async function handleSubmit() {
 		submitting = true;
 		let data = { name: name, github: github, linkedIn: linkedIn };
-		await new put(data);
-		console.log(data);
+		const [updates, errors] = await put('data', data);
+		// error: Argument of type 'string' is not assignable to parameter of type 'RequestEvent<Record<string, string>>'.ts(2345). I can't figure out what they want for 'RequestEvent,Record<string, string>>' I can't figure out what RequestEvent they want. the params should be the data/object.
+		//what goes here?
+		console.log(updates);
+		if (errors) {
+			return {
+				status: 400,
+				body: { errors }
+			};
+		}
 		alert('Form submitted successfully');
+		return { body: { success: true } };
 	}
+
 	function handleValidateName(val: string) {
 		return val?.length > 3;
 	}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Contact from '$lib/playground/contact-me/Contact.svelte';
+	import Contact from '$lib/playground/contact/Contact.svelte';
 	export let errors: any;
 </script>
 

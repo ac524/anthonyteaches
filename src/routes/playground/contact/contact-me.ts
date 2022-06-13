@@ -12,10 +12,10 @@ export async function get({ platform }: RequestEvent) {
 	return result;
 }
 
-export async function put({ platform }: RequestEvent) {
-	// what goes here??
+export async function put({ platform }: RequestEvent, data: Object) {
+	// how are we sending the data through here and how it reading it?
 
-	const [updates, errors] = await platform.env.CONTACTS.put('data', { data });
+	const [updates, errors] = await platform.env.CONTACTS.put('data', data);
 	console.log(updates);
 	if (errors) {
 		return {
