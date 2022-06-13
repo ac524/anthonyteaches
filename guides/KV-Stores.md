@@ -6,12 +6,10 @@ Table of Contents
 
 - [Basics](#basics)
 - [Using the Wrangler CLI](#using-the-wrangler-cli)
-   - [Create Namespace](#create-namespace)
-   - [View Namespaces](#view-namespaces)
-   - [Accessing keys, values in CLI](#accessing-keys-values-in-cli)
-- [App namespace, binding set up](#app-namespace-binding-set-up)  
-  - [Hooks](#hooks)  
-  - [App.d.ts](#appdts)  
+  - [Create Namespace](#create-namespace)
+- [App namespace, binding set up](#app-namespace-binding-set-up)
+  - [Hooks](#hooks)
+  - [App.d.ts](#appdts)
   - [Example with `RequestEvent` method](#example-with-requestevent-method)
 - [Key-Value JS, TS CRUD actions](#key-value-js-ts-crud-actions)
 
@@ -55,37 +53,6 @@ kv_namespaces = [
   { binding = "kv-binding-FILES", id = "c3f09adsdsdfdfw1b4740a7f63" }
 ]
 ```
-
-# View Namespaces
-
-View the namespaces and bindings associated with each namespace. The binding is last part of the 'title', and it's now a we'll access and use inside our project to get, put, and delete kv's dynamically.
-
-```
- wrangler kv:namespace list
-
-✨[{"id":"1a71bc7d9a46565dsf4dsb71e","title":"__kv-binding-workers_sites_assets"},
-
-✨{"id":"c3f09adsdsdfdfw1b4740a7f63","title":"kv-binding-FILES"},
-
-✨{"id":"e73de62e65406540ebfbsdf80a","title":"__rock-paper-scissors-workers_sites_assets"}]
-```
-
-# Accessing keys, values in CLI
-
-This will right a key and a value to your KV namespace using the Wrangler CLI. In this project we'll be accessing and modifying our kv namespace items dynamically (see [KV Javascript CRUD actions](#kv-javascript-crud-actions) but this is how you could either put, list, or delete through CLI commands.
-
-```
-// substitute put with list or delete, same concept.
-wrangler kv:key put --binding=kv-binding-FILES "key" "value"
-```
-
-Instead of --binding, you may use --namespace-id to specify which KV namespace should receive the operation:
-
-```
-wrangler kv:key put --namespace-id=c3f09adsdsdfdfw1b4740a7f63 "key" "value"
-```
-
-Have two+ environments, like development and production? See [Wrangler/Workers-KV docs](https://developers.cloudflare.com/workers/wrangler/workers-kv/).
 
 More wrangler CLI commands to manage your Cloudflare Workers:
 
