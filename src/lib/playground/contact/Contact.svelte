@@ -1,7 +1,7 @@
 <script lang="ts">
 	// Starting template: https://gist.github.com/danawoodman/1aba56c63e2c268ae840b4a9d66f869a
 	import Field from './Field.svelte';
-	import { put, get } from '../../../routes/playground/contact/contact-me';
+	import { put, get } from '../../../routes/playground/contact/contact';
 	import { blur } from 'svelte/transition';
 	import { append } from 'svelte/internal';
 	// import type { RequestEvent } from '@sveltejs/kit/types/private';
