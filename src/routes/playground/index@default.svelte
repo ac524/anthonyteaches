@@ -6,7 +6,7 @@
 Playgrounds and expirimentations built by contributors while learning Svelte.
 <h2>Contact Page</h2>
 <ul>
-	<li><a href="/playground/contact-me">Contact me</a></li>
+	<li><a href="/playground/contact">Contact me</a></li>
 </ul>
 
 <h2>Games</h2>
