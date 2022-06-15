@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Contact from '$lib/playground/contact/Contact.svelte';
-	export let errors: any;
+
 </script>
 
 <svelte:head>
@@ -10,9 +10,7 @@
 
 <div class="window">
 	<Contact />
-	{#if errors?.title}
-		<p class="error">{errors.title}</p>
-	{/if}
+
 </div>
 
 <style>

@@ -1,10 +1,8 @@
 <script lang="ts">
 	// Starting template: https://gist.github.com/danawoodman/1aba56c63e2c268ae840b4a9d66f869a
 	import Field from './Field.svelte';
-	import { put, get } from '../../../routes/playground/contact/contact';
 	import { blur } from 'svelte/transition';
-	import { append } from 'svelte/internal';
-	// import type { RequestEvent } from '@sveltejs/kit/types/private';
+	// import { append } from 'svelte/internal';
 
 	let name = '';
 	let linkedIn = '';
@@ -24,22 +22,22 @@
 	async function handleSubmit() {
 		submitting = true;
 		let data = { name: name, github: github, linkedIn: linkedIn };
-		const [updates, errors] = await put('data', data);
-		// error: Argument of type 'string' is not assignable to parameter of type 'RequestEvent<Record<string, string>>'.ts(2345). I can't figure out what they want for 'RequestEvent,Record<string, string>>' I can't figure out what RequestEvent they want. the params should be the data/object.
-		//what goes here?
-		console.log(updates);
-		if (errors) {
-			return {
-				status: 400,
-				body: { errors }
-			};
-		}
+		const result = await fetch( '/playground/contact/api', {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		})
+		console.log(result)
+		const formResult = await result.json();
+		console.log(formResult);
 		alert('Form submitted successfully');
-		return { body: { success: true } };
+		// return { body: { success: true } };
 	}
 
 	function handleValidateName(val: string) {
-		return val?.length > 3;
+		return val?.length > 2;
 	}
 	function handleValidateLinkedIn(val: string) {
 		console.log(val);

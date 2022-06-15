@@ -8,6 +8,7 @@ const createKVMock = (defaultData : [string, string][] = []) => {
         },
         async put(key:string, value:string) {
             store.set(key, value);
+           return [1, null];
         }
     }
 }
