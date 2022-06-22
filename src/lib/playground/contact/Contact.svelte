@@ -2,6 +2,7 @@
 	// Starting template: https://gist.github.com/danawoodman/1aba56c63e2c268ae840b4a9d66f869a
 	import Field from './Field.svelte';
 	import { blur } from 'svelte/transition';
+
 	// import { append } from 'svelte/internal';
 
 	let name = '';
@@ -22,14 +23,14 @@
 	async function handleSubmit() {
 		submitting = true;
 		let data = { name: name, github: github, linkedIn: linkedIn };
-		const result = await fetch( '/playground/contact/api', {
+		const result = await fetch('/playground/contact/api', {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify(data)
-		})
-		console.log(result)
+		});
+		
 		const formResult = await result.json();
 		console.log(formResult);
 		alert('Form submitted successfully');

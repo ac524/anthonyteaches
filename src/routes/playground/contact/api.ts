@@ -1,4 +1,5 @@
 import type { RequestEvent } from '@sveltejs/kit/types/private';
+import { v4 as uuidv4 } from 'uuid';
 
 export async function get({ platform }: RequestEvent) {
 	const result = (await platform.env.CONTACTS.get('data')) || '';
@@ -7,12 +8,10 @@ export async function get({ platform }: RequestEvent) {
 }
 
 export async function put({ platform, request }: RequestEvent) {
-	// how are we sending the data through here and how it reading it? Trying to pass through after platform: RequestEvent so we don't get an error message on data in line 18.
 	const data = await request.json();
-	
+	let uuid = uuidv4();
+	console.log(uuid);
+	await platform.env.CONTACTS.put(`${uuid}`, JSON.stringify(data));
 
-	await platform.env.CONTACTS.put('data', JSON.stringify(data))
-	// console.log(updates.json());
-
-	return { body: { success: true }};
+	return { body: { success: true } };
 }
