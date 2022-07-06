@@ -10,8 +10,7 @@ export async function get({ platform }: RequestEvent) {
 export async function put({ platform, request }: RequestEvent) {
 	const data = await request.json();
 	let uuid = uuidv4();
-	console.log(uuid);
-	await platform.env.CONTACTS.put(`${uuid}`, JSON.stringify(data));
+	await platform.env.CONTACTS.put(`contact-${uuid}`, JSON.stringify(data));
 
 	return { body: { success: true } };
 }

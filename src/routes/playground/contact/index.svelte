@@ -1,7 +1,10 @@
+<!--  -->
 <script lang="ts">
 	import Contact from '$lib/playground/contact/Contact.svelte';
-
+	export let success: boolean;
 </script>
+
+<!-- script module - load to make an endpoint -->
 
 <svelte:head>
 	<title>Svelte Playground: Contact Page</title>
@@ -10,7 +13,7 @@
 
 <div class="window">
 	<Contact />
-
+	{ success }
 </div>
 
 <style>
