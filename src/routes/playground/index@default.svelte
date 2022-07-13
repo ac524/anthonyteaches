@@ -1,9 +1,13 @@
-<script lang=ts>
+<script lang="ts">
 </script>
 
 <h1>Playgrounds</h1>
 
 Playgrounds and expirimentations built by contributors while learning Svelte.
+<h2>Networking</h2>
+<ul>
+	<li><a href="/playground/network">View or join the networking list</a></li>
+</ul>
 
 <h2>Games</h2>
 <ul>
