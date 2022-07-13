@@ -1,6 +1,6 @@
 <!--  -->
 <script lang="ts">
-	import Contact from '$lib/playground/contact/Contact.svelte';
+	import Network from '$lib/playground/network/Networking.svelte';
 	export let success: boolean;
 </script>
 
@@ -12,8 +12,9 @@
 </svelte:head>
 
 <div class="window">
-	<Contact />
-	{ success }
+	<Network />
+	<!-- just making sure my stuff is connecting -->
+	{success}
 </div>
 
 <style>

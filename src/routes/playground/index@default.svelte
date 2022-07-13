@@ -4,14 +4,15 @@
 <h1>Playgrounds</h1>
 
 Playgrounds and expirimentations built by contributors while learning Svelte.
-<h2>Contact Page</h2>
+<h2>Networking</h2>
 <ul>
-	<li><a href="/playground/contact">Contact me</a></li>
+	<li><a href="/playground/network">View or join the networking list</a></li>
 </ul>
 
 <h2>Games</h2>
 <ul>
 	<li><a href="/playground/tic-tac-toe">Tic Tac Toe</a></li>
+	<li><a href="/playground/rock-paper-scissors">Rock Paper Scissors</a></li>
 </ul>
 
 <h2>Experiments</h2>

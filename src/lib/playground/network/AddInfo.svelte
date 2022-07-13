@@ -18,7 +18,7 @@
 	async function handleSubmit() {
 		submitting = true;
 		let data = { name: name, github: github, linkedIn: linkedIn };
-		const result = await fetch('/playground/contact/api', {
+		const result = await fetch('/playground/network/api', {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json'
