@@ -1,38 +1,13 @@
 {
   "name": "anthonyteaches",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "dev": "svelte-kit dev",
-    "dev:open": "svelte-kit dev --open",
-    "dev:host": "svelte-kit dev --host",
-    "build": "svelte-kit build",
-    "package": "svelte-kit package",
-    "preview": "svelte-kit preview",
-    "prepare": "svelte-kit sync",
-    "check": "svelte-check --tsconfig ./tsconfig.json",
-    "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
-    "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
-    "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
-    "deploy": "npm run build && wrangler publish"
+    "dev": "cd main && pnpm dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "devDependencies": {
-    "@sveltejs/adapter-auto": "next",
-    "@sveltejs/kit": "next",
-    "@typescript-eslint/eslint-plugin": "^5.22.0",
-    "@typescript-eslint/parser": "^5.22.0",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-svelte3": "^3.2.1",
-    "prettier": "^2.6.2",
-    "prettier-plugin-svelte": "^2.7.0",
-    "svelte": "^3.48.0",
-    "svelte-check": "^2.7.0",
-    "svelte-preprocess": "^4.10.6",
-    "tslib": "^2.4.0",
-    "typescript": "~4.6.4"
-  },
-  "type": "module",
-  "dependencies": {
-    "@sveltejs/adapter-cloudflare-workers": "^1.0.0-next.39"
-  }
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
