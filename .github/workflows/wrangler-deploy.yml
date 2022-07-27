@@ -42,6 +42,7 @@ jobs:
         run: pnpm install
 
       - name: Publish
+        working-directory: "./main"
         run: |
           wrangler secret put ${{ secrets.CF_API_TOKEN }}
-          pnpm deploy:main
+          pnpm builddeploy
