@@ -44,5 +44,6 @@ jobs:
       - name: Publish
         working-directory: "./main"
         run: |
+          npm i -g wrangler
           wrangler secret put ${{ secrets.CF_API_TOKEN }}
           pnpm builddeploy
