@@ -36,7 +36,7 @@ jobs:
         run: pnpm install
 
       - name: Build worker
-        run: pnpm builddeploy
+        run: pnpm build:main
 
       - name: Publish
         uses: cloudflare/wrangler-action@2.0.0

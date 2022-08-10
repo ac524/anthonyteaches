@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "cd main && pnpm dev",
+    "build:main": "cd main && pnpm build",
     "deploy:main": "cd main && pnpm builddeploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
