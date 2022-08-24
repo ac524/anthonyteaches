@@ -19,6 +19,12 @@ jobs:
           version: 7
           run_install: false
 
+      - name: Setup Node.js environment
+          uses: actions/setup-node@v2
+          with:
+            node-version: 16
+            cache: 'pnpm'
+
       # - name: Get pnpm store directory
       #   id: pnpm-cache
       #   run: |
@@ -36,60 +42,10 @@ jobs:
         run: pnpm install
 
       - name: Build worker
-        run: pnpm build:main
+        run: pnpm build
 
       - name: Publish
         uses: cloudflare/wrangler-action@2.0.0
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           workingDirectory: "main"
-
-# name: Deploy To Worker
-
-# on:
-#   push:
-#     branches:
-#       - main
-
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
-#     name: Deploy
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v3
-
-#       - name: Install Node.js
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: 16
-
-#       - uses: pnpm/action-setup@v2.0.1
-#         name: Install pnpm
-#         id: pnpm-install
-#         with:
-#           version: 7
-#           run_install: false
-
-#       - name: Get pnpm store directory
-#         id: pnpm-cache
-#         run: |
-#           echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
-
-#       - uses: actions/cache@v3
-#         name: Setup pnpm cache
-#         with:
-#           path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-#           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-#           restore-keys: |
-#             ${{ runner.os }}-pnpm-store-
-
-#       - name: Install dependencies
-#         run: pnpm install
-
-#       - name: Publish
-#         working-directory: "./main"
-#         run: |
-#           npm i -g wrangler
-#           wrangler secret put ${{ secrets.CF_API_TOKEN }}
-#           pnpm builddeploy
