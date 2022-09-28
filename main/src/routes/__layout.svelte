@@ -1,5 +1,6 @@
 <script>
     import "$lib/css/global.css";
+    import "../app.css";
 </script>
 
 <slot name="breadcrumb"></slot>
